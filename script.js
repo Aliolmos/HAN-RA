@@ -507,6 +507,21 @@ function submitTestimony() {
     // La disolución empieza en el 65% de la pantalla
     const DISSOLVE_START = 0.65;
 
+    // Detecta el Y (absoluto en página) donde empieza la sección clara
+    let lightSectionY = Infinity;
+    function updateLightSectionY() {
+        const s = document.querySelector('.about');
+        if (s) lightSectionY = s.getBoundingClientRect().top + window.scrollY;
+    }
+    updateLightSectionY();
+    window.addEventListener('resize', updateLightSectionY);
+    window.addEventListener('scroll', updateLightSectionY);
+
+    // true si una partícula (coordenada Y en pantalla) está sobre fondo claro
+    function isOverLight(screenY) {
+        return (screenY + window.scrollY) >= lightSectionY;
+    }
+
     function randomBetween(a, b) { return a + Math.random() * (b - a); }
 
     // ── Pétalo ──
@@ -530,16 +545,27 @@ function submitTestimony() {
         ctx.restore();
     }
 
-    // ── Partícula de ceniza dorada — muy pequeña y tenue ──
+    // ── Partícula de ceniza dorada — color según fondo ──
     function drawAsh(a) {
         ctx.save();
         ctx.globalAlpha = a.opacity;
         ctx.translate(a.x, a.y);
 
+        const onLight = isOverLight(a.y);
         const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, a.r);
-        grad.addColorStop(0,   'rgba(255, 235, 150, 1)');
-        grad.addColorStop(0.5, 'rgba(220, 180,  60, 0.5)');
-        grad.addColorStop(1,   'rgba(200, 150,  20, 0)');
+
+        if (onLight) {
+            // Sobre fondo claro: cobre/ámbar oscuro para contrastar
+            grad.addColorStop(0,   'rgba(160,  90,  10, 1)');
+            grad.addColorStop(0.5, 'rgba(130,  70,   5, 0.6)');
+            grad.addColorStop(1,   'rgba(100,  50,   0, 0)');
+        } else {
+            // Sobre fondo oscuro: dorado luminoso
+            grad.addColorStop(0,   'rgba(255, 235, 150, 1)');
+            grad.addColorStop(0.5, 'rgba(220, 180,  60, 0.5)');
+            grad.addColorStop(1,   'rgba(200, 150,  20, 0)');
+        }
+
         ctx.beginPath();
         ctx.arc(0, 0, a.r, 0, Math.PI * 2);
         ctx.fillStyle = grad;
@@ -550,14 +576,14 @@ function submitTestimony() {
     function spawnAsh(x, y, size, count) {
         for (let i = 0; i < count; i++) {
             ashParticles.push({
-                x:    x + randomBetween(-size * 0.6, size * 0.6),
-                y:    y + randomBetween(-size * 0.4, size * 0.3),
-                r:    randomBetween(0.8, 2.2),          // muy pequeñas
-                vx:   randomBetween(-0.5, 0.5),
-                vy:   randomBetween(-0.6, 0.15),        // suben suavemente
-                gravity: randomBetween(0.004, 0.012),
-                opacity: randomBetween(0.35, 0.65),     // tenues
-                fade:    randomBetween(0.004, 0.010),   // desaparecen despacio
+                x:       x + randomBetween(-size * 0.8, size * 0.8),
+                y:       y + randomBetween(-size * 0.5, size * 0.3),
+                r:       randomBetween(1.4, 2.0),        // más grandes, visibles
+                vx:      randomBetween(-0.9, 0.9),
+                vy:      randomBetween(-1.2, 0.1),       // suben bastante
+                gravity: randomBetween(0.003, 0.008),    // caen muy despacio
+                opacity: randomBetween(0.7, 1.0),        // bien opacas
+                fade:    randomBetween(0.003, 0.007),    // duran mucho más
             });
         }
     }
@@ -602,13 +628,13 @@ function submitTestimony() {
 
             const currentOpacity = p.baseOpacity * (1 - t);
 
-            // Ceniza: pocas partículas, solo en la zona de disolución
-            if (t > 0.05 && t < 0.98 && Math.random() < t * 0.60) {
-                spawnAsh(p.x, p.y, p.size, 1);
+            // Ceniza progresiva — cuantas más avanza, más suelta
+            if (t > 0.05 && t < 0.99 && Math.random() < t * 0.5) {
+                spawnAsh(p.x, p.y, p.size, Math.random() < 0.4 ? 2 : 1);
             }
-            // Pequeña ráfaga inicial
+            // Explosión visible al inicio de la disolución
             if (t > 0.08 && !p.ashSpawned) {
-                spawnAsh(p.x, p.y, p.size, 4);
+                spawnAsh(p.x, p.y, p.size, 14);
                 p.ashSpawned = true;
             }
 
