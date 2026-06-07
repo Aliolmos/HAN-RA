@@ -483,3 +483,104 @@ function submitTestimony() {
 
 // Initialize parallax if needed
 // initParallax();
+/**
+ * Pétalos cayendo
+ */
+(function initPetals() {
+    const canvas = document.getElementById('petalsCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    canvas.width  = W;
+    canvas.height = H;
+
+    window.addEventListener('resize', () => {
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width  = W;
+        canvas.height = H;
+    });
+
+    const PETAL_COUNT = 18;
+    const petals = [];
+
+    // Dibuja un pétalo con forma orgánica
+    function drawPetal(ctx, x, y, size, angle, opacity) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.globalAlpha = opacity;
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(
+            size * 0.5, -size * 0.5,
+            size,        -size * 0.2,
+            size * 0.8,  size * 0.4
+        );
+        ctx.bezierCurveTo(
+            size * 0.6,  size * 0.9,
+            size * 0.1,  size * 0.7,
+            0,           0
+        );
+
+        // Gradiente rosa suave
+        const grad = ctx.createRadialGradient(size * 0.3, 0, 0, size * 0.3, 0, size);
+        grad.addColorStop(0, 'rgba(255, 192, 203, 1)');
+        grad.addColorStop(0.5, 'rgba(255, 160, 180, 0.85)');
+        grad.addColorStop(1, 'rgba(220, 120, 150, 0.4)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function randomBetween(a, b) { return a + Math.random() * (b - a); }
+
+    function createPetal() {
+        return {
+            x:        randomBetween(0, W),
+            y:        randomBetween(-200, -10),
+            size:     randomBetween(10, 20),
+            speedY:   randomBetween(0.4, 1.1),
+            speedX:   randomBetween(-0.4, 0.4),
+            angle:    randomBetween(0, Math.PI * 2),
+            spin:     randomBetween(-0.012, 0.012),
+            sway:     randomBetween(0.3, 0.9),
+            swaySpeed:randomBetween(0.005, 0.015),
+            swayTime: randomBetween(0, Math.PI * 2),
+            opacity:  randomBetween(0.5, 0.85),
+        };
+    }
+
+    for (let i = 0; i < PETAL_COUNT; i++) {
+        const p = createPetal();
+        p.y = randomBetween(-H, H); // distribuidos desde el inicio
+        petals.push(p);
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+
+        petals.forEach(p => {
+            p.swayTime += p.swaySpeed;
+            p.x += p.speedX + Math.sin(p.swayTime) * p.sway;
+            p.y += p.speedY;
+            p.angle += p.spin;
+
+            drawPetal(ctx, p.x, p.y, p.size, p.angle, p.opacity);
+
+            // Reiniciar cuando sale de pantalla
+            if (p.y > H + 30 || p.x < -50 || p.x > W + 50) {
+                Object.assign(p, createPetal());
+                p.y = -20;
+            }
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+})();
