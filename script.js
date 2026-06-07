@@ -37,7 +37,7 @@ function initLoader() {
         setTimeout(() => {
             loader.classList.add('hidden');
             animateHero();
-        }, 1800);
+        }, 1200);
     }
 }
 
