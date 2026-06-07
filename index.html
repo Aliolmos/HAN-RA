@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module" src="firebase.js"></script>
 </head>
 <body>
     <!-- Noise Texture Overlay -->
@@ -176,7 +179,7 @@
                 <div class="about-visual">
                     <div class="about-images">
                         <div class="about-image about-image--1" data-reveal data-parallax="0.1">
-                            <img src="imagenes pagina general/verti.png" alt="Libros antiguos" loading="lazy">
+                            <img src="imagenes pagina general/verti2.png" alt="Libros antiguos" loading="lazy">
                         </div>
                         <div class="about-image about-image--2" data-reveal data-parallax="0.15">
                             <img src="imagenes pagina general/ab.png" alt="Biblioteca" loading="lazy">
@@ -196,7 +199,7 @@
                         <div class="value-number">01</div>
                         <div class="value-content">
                             <h3>Puente Cultural</h3>
-                            <p>Conectamos Argentina y Corea a través de historias que unen culturas, emociones y nuevas miradas del mundo.</p>
+                            <p>Conectamos Argentina y Corea del Sur a través de historias que unen culturas, emociones y nuevas miradas del mundo.</p>
                         </div>
                         <div class="value-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -209,7 +212,7 @@
                         <div class="value-number">02</div>
                         <div class="value-content">
                             <h3>Literatura Sin Fronteras</h3>
-                            <p>Editamos obras pensadas para viajar más allá del idioma, la distancia y los límites geográficos.</p>
+                            <p>Editamos obras pensadas para viajar más allá del idioma, la distancia y los límites geográficos, impulsando nuevas voces argentinas con identidad propia y perspectivas contemporáneas.</p>
                         </div>
                         <div class="value-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -310,7 +313,7 @@
             </div>
             
             <div class="books-grid">
-                <article class="book-card" data-category="novela" data-reveal>
+                <article class="book-card" data-category="poesia" data-reveal>
                     <div class="book-cover book-cover--warm">
                         <div class="book-spine"></div>
                         <div class="book-front" style="background-image: url('IMAGENES LIBROS/tapa 1er libro.png'); background-size: cover; ">
@@ -442,10 +445,45 @@
                         
                     </div>
                 </article>
+                <article class="book-card proximamente-card" data-category="novela" data-reveal>
+                    <div class="book-cover book-cover--proximamente">
+                        <div class="book-spine"></div>
+                        <div class="book-front proximamente-front">
+                            <span class="proximamente-label">PRÓXIMAMENTE</span>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">&nbsp;</span>
+                    </div>
+                </article>
+                
+                
+                <article class="book-card proximamente-card" data-category="cuento" data-reveal>
+                    <div class="book-cover book-cover--proximamente">
+                        <div class="book-spine"></div>
+                        <div class="book-front proximamente-front">
+                            <span class="proximamente-label">PRÓXIMAMENTE</span>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">&nbsp;</span>
+                    </div>
+                </article>
+                
+                <article class="book-card proximamente-card" data-category="ensayo" data-reveal>
+                    <div class="book-cover book-cover--proximamente">
+                        <div class="book-spine"></div>
+                        <div class="book-front proximamente-front">
+                            <span class="proximamente-label">PRÓXIMAMENTE</span>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">&nbsp;</span>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
-
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonios">
         <div class="container">
@@ -457,65 +495,44 @@
                 <h2 class="section-title" data-reveal>
                     Lo que dicen nuestros<br><span class="highlight">autores</span>
                 </h2>
+                <p class="section-subtitle" data-reveal style="color: var(--text-muted, #aaa); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Solo autores de HAN-RA pueden dejar su testimonio.
+                </p>
             </div>
-            
-            <div class="testimonials-grid">
-                <article class="testimonial" data-reveal>
-                    <div class="testimonial-content">
-                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                        </svg>
-                        <blockquote>
-                            HAN-RA no es solo una editorial, es una familia que entiende la importancia de 
-                            preservar nuestra identidad cultural mientras la compartimos con el mundo.
-                        </blockquote>
-                    </div>
-                    <footer class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Min-Ji Kim">
-                        <div class="testimonial-info">
-                            <cite>Min-Ji Kim</cite>
-                            <span>Autora de "El jardin de los cerezos portenos"</span>
+
+            <!-- Testimonials rendered by JS -->
+            <div class="testimonials-grid" id="testimonialsGrid"></div>
+
+            <!-- Add testimony form -->
+            <div class="testimony-form-wrap" data-reveal>
+                <div class="testimony-form-box">
+                    <h3 class="testimony-form-title">Dejar un testimonio</h3>
+                    <p class="testimony-form-desc">Ingresá tu código de autor para verificar tu identidad.</p>
+                    
+                    <div id="testimonyStep1">
+                        <div class="testimony-input-row">
+                            <input type="text" id="authorCode" placeholder="Código de autor (ej: HANRA-001)" class="testimony-input" />
+                            <button class="btn btn-primary" onclick="verifyAuthorCode()">
+                                <span class="btn-text">Verificar</span>
+                            </button>
                         </div>
-                    </footer>
-                </article>
-                
-                <article class="testimonial" data-reveal>
-                    <div class="testimonial-content">
-                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                        </svg>
-                        <blockquote>
-                            Encontrar una editorial que valorara mi fusion de culturas parecia imposible 
-                            hasta que conoci HAN-RA. Su vision intercultural transformo mi carrera.
-                        </blockquote>
+                        <p id="codeError" class="testimony-error" style="display:none;">Código inválido. Solo autores registrados pueden comentar.</p>
                     </div>
-                    <footer class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Santiago Reyes">
-                        <div class="testimonial-info">
-                            <cite>Santiago Reyes</cite>
-                            <span>Autor de "Versos del Rio de la Plata"</span>
-                        </div>
-                    </footer>
-                </article>
-                
-                <article class="testimonial" data-reveal>
-                    <div class="testimonial-content">
-                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                        </svg>
-                        <blockquote>
-                            El profesionalismo y la calidez del equipo de HAN-RA hacen que cada proyecto 
-                            sea especial. Han logrado que mis libros lleguen a lectores en todo el continente.
-                        </blockquote>
+
+                    <div id="testimonyStep2" style="display:none;">
+                        <p id="authorWelcome" class="testimony-welcome"></p>
+                        <textarea id="testimonyText" class="testimony-textarea" placeholder="Escribí tu testimonio aquí..." rows="4"></textarea>
+                        <button class="btn btn-primary" onclick="submitTestimony()">
+                            <span class="btn-text">Publicar testimonio</span>
+                            <span class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                                </svg>
+                            </span>
+                        </button>
+                        <p id="testimonySuccess" class="testimony-success" style="display:none;">¡Gracias! Tu testimonio fue publicado.</p>
                     </div>
-                    <footer class="testimonial-author">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop&crop=face" alt="Amara Diallo">
-                        <div class="testimonial-info">
-                            <cite>Amara Diallo</cite>
-                            <span>Autora de "Los colores de Dakar"</span>
-                        </div>
-                    </footer>
-                </article>
+                </div>
             </div>
         </div>
     </section>
