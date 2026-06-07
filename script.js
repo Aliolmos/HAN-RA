@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCounterAnimation();
     initBookFilters();
     initContactForm();
+    loadTestimonials();
    
 });
 
@@ -305,42 +306,155 @@ function initBookFilters() {
 }
 
 /**
- * Contact Form
+ * Contact Form — envío directo via EmailJS
+ * Configurá tus IDs de EmailJS abajo.
+ * Creá cuenta gratis en https://www.emailjs.com
+ * Service ID, Template ID y Public Key se obtienen en el dashboard.
  */
+const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID';   // ← reemplazá
+const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';  // ← reemplazá
+const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';   // ← reemplazá
+
 function initContactForm() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
     const form = document.getElementById('contactForm');
     if (!form) return;
-    
-    form.addEventListener('submit', (e) => {
+
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
-        
-        // Create mailto link
-        const subject = encodeURIComponent(`[HAN-RA Web] ${data.subject}`);
-        const body = encodeURIComponent(
-            `Nombre: ${data.name}\n` +
-            `Email: ${data.email}\n` +
-            `Asunto: ${data.subject}\n\n` +
-            `Mensaje:\n${data.message}`
-        );
-        
-        window.location.href = `mailto:contacto@han-ra.com?subject=${subject}&body=${body}`;
-        
-        // Button feedback
+
         const btn = form.querySelector('button[type="submit"]');
         const btnText = btn.querySelector('.btn-text');
         const originalText = btnText.textContent;
-        
-        btnText.textContent = 'Abriendo correo...';
+        btnText.textContent = 'Enviando...';
         btn.disabled = true;
-        
-        setTimeout(() => {
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        // Si EmailJS está configurado, usarlo
+        if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID !== 'TU_SERVICE_ID') {
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    from_name:    data.name,
+                    from_email:   data.email,
+                    subject:      data.subject,
+                    message:      data.message,
+                    to_email:     'editorialhanra@gmail.com',
+                });
+                btnText.textContent = '¡Mensaje enviado!';
+                form.reset();
+                setTimeout(() => {
+                    btnText.textContent = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            } catch (err) {
+                console.error('EmailJS error:', err);
+                btnText.textContent = 'Error al enviar. Intentá de nuevo.';
+                btn.disabled = false;
+                setTimeout(() => { btnText.textContent = originalText; }, 3000);
+            }
+        } else {
+            // Fallback: mailto (hasta que se configure EmailJS)
+            const subject = encodeURIComponent(`[HAN-RA Web] ${data.subject}`);
+            const body = encodeURIComponent(
+                `Nombre: ${data.name}\nEmail: ${data.email}\nAsunto: ${data.subject}\n\nMensaje:\n${data.message}`
+            );
+            window.location.href = `mailto:editorialhanra@gmail.com?subject=${subject}&body=${body}`;
             btnText.textContent = originalText;
             btn.disabled = false;
-        }, 2000);
+        }
     });
+}
+
+/* ─────────────────────────────────────────
+   SISTEMA DE TESTIMONIOS CON CÓDIGO DE AUTOR
+   ───────────────────────────────────────── */
+
+// Códigos válidos de autores: { código: { nombre, libro } }
+// Podés agregar más acá cuando incorpores nuevos autores.
+const AUTHOR_CODES = {
+    'HANRA-001': { nombre: 'Monelli Silvana A.', libro: 'HAN Una argentina con alma y corazón coreano' },
+    // Agregá más códigos acá:
+    // 'HANRA-002': { nombre: 'Nombre Autor', libro: 'Título del libro' },
+};
+
+const STORAGE_KEY = 'hanra_testimonios';
+
+let verifiedAuthor = null;
+
+function loadTestimonials() {
+    const grid = document.getElementById('testimonialsGrid');
+    if (!grid) return;
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (stored.length === 0) {
+        grid.innerHTML = '<p style="text-align:center; color: var(--text-muted, #aaa); padding: 2rem 0;">Todavía no hay testimonios. ¡Sé el primero en compartir tu experiencia!</p>';
+        return;
+    }
+    grid.innerHTML = stored.map(t => `
+        <article class="testimonial">
+            <div class="testimonial-content">
+                <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <blockquote>${t.texto}</blockquote>
+            </div>
+            <footer class="testimonial-author">
+                <div class="testimonial-avatar">${t.nombre.charAt(0)}</div>
+                <div class="testimonial-info">
+                    <cite>${t.nombre}</cite>
+                    <span>Autora/Autor de "${t.libro}"</span>
+                </div>
+            </footer>
+        </article>
+    `).join('');
+}
+
+function verifyAuthorCode() {
+    const code = document.getElementById('authorCode').value.trim().toUpperCase();
+    const author = AUTHOR_CODES[code];
+    const errorEl = document.getElementById('codeError');
+
+    if (author) {
+        verifiedAuthor = author;
+        errorEl.style.display = 'none';
+        document.getElementById('testimonyStep1').style.display = 'none';
+        document.getElementById('testimonyStep2').style.display = 'block';
+        document.getElementById('authorWelcome').textContent =
+            `¡Bienvenida/o, ${author.nombre}! Escribí tu experiencia con HAN-RA.`;
+    } else {
+        errorEl.style.display = 'block';
+    }
+}
+
+function submitTestimony() {
+    const texto = document.getElementById('testimonyText').value.trim();
+    const successEl = document.getElementById('testimonySuccess');
+    if (!texto || !verifiedAuthor) return;
+
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    stored.unshift({
+        nombre: verifiedAuthor.nombre,
+        libro:  verifiedAuthor.libro,
+        texto,
+        fecha:  new Date().toLocaleDateString('es-AR'),
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+
+    document.getElementById('testimonyText').value = '';
+    successEl.style.display = 'block';
+    loadTestimonials();
+
+    setTimeout(() => {
+        successEl.style.display = 'none';
+        document.getElementById('testimonyStep2').style.display = 'none';
+        document.getElementById('testimonyStep1').style.display = 'block';
+        document.getElementById('authorCode').value = '';
+        verifiedAuthor = null;
+    }, 3000);
 }
 
 
