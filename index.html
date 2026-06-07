@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAN-RA Editorial | Literatura que une culturas</title>
+    <meta name="description" content="Editorial HAN-RA - Publicamos voces de todo el mundo. Literatura sin fronteras que conecta culturas.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Noise Texture Overlay -->
+    <div class="noise-overlay"></div>
+    
+   
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <svg class="loader-circle" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+                    <circle class="loader-circle-progress" cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1"/>
+                </svg>
+                <div class="loader-text-wrap">
+                    <img src="logo/HAN - RA (1).png" alt="">
+                </div>
+            </div>
+            <div class="loader-bottom">
+                <div class="loader-line"></div>
+                <p class="loader-tagline">HAN-RA EDITORIAL</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="#inicio" class="logo">
+                <div class="logo-mark">
+                    <img src="logo/HAN - RA (1).png" alt="Logo de HAN-RA" loading="lazy">
+                </div>
+                
+            </a>
+            <div class="nav-center">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                    <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                    <li><a href="#autores" class="nav-link">Autores</a></li>
+                    <li><a href="#catalogo" class="nav-link">Catalogo</a></li>
+                    <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <a href="#contacto" class="btn btn-nav">Contacto</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg">
+            <div class="hero-grid-lines"></div>
+            <div class="hero-gradient-orb hero-gradient-orb--1"></div>
+            <div class="hero-gradient-orb hero-gradient-orb--2"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-eyebrow" data-reveal>
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">EDITORAL HAN - RA</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    <span class="hero-title-line" data-reveal>
+                        <span class="word">Literatura</span>
+                    </span>
+                    <span class="hero-title-line" data-reveal>
+                        <span class="word accent">sin barreras</span>
+                    </span>
+                </h1>
+                
+                <p class="hero-description" data-reveal style="text-align: justify;">
+                    HAN-RA nace con el propósito de tender puentes literarios entre todas las culturas del mundo. 
+                    Somos una editorial independiente fundada en Córdoba Capital; creamos libros para abrazar todas las miradas, voces y sentidos. 
+                    A través de audios, música y formatos accesibles, hacemos que las historias se escuchen, se sientan y se compartan sin límites.
+</p>
+                
+                <div class="hero-cta" data-reveal>
+                    <a href="#catalogo" class="btn btn-primary">
+                        <span class="btn-text">Explorar Catalogo</span>
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="#nosotros" class="btn btn-outline">
+                        <span class="btn-text">Conocer mas</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+    <div class="hero-cards">
+        <!-- Tarjeta 1 -->
+        <div class="hero-card hero-card--1" data-magnetic>
+            <div class="hero-card-inner">
+                <img src="imagenes carta/argentina.png" alt="Oriente">
+                <span class="hero-card-label">Argentina</span>
+            </div>
+        </div>
+        
+        <!-- Tarjeta 2 (Anteriormente la 3) -->
+        <div class="hero-card hero-card--3" data-magnetic>
+            <div class="hero-card-inner">
+                <img src="imagenes carta/mundo.png" alt="Mundo">
+                <span class="hero-card-label">para el mundo</span>
+            </div>
+        </div>
+    </div>
+</div>
+        
+        <div class="hero-footer">
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="section-label" data-reveal>
+                        <span class="label-number">01</span>
+                        <span class="label-text">Quienes Somos</span>
+                    </div>
+                    
+                    <h2 class="about-title" data-reveal>
+                        Una editorial que<br>
+                        <span class="highlight">construye puentes</span><br>
+                        culturales
+                    </h2>
+                    
+                    <div class="about-text" data-reveal style="text-align: justify;">
+                        <p class="lead">
+                            HAN-RA nace en Córdoba, Argentina, como una editorial independiente que rompe fronteras para unir culturas a través de los libros. 
+                            Hacemos pie en nuestra identidad argentina y en la profunda tradición de Corea para proyectar historias que viajen desde acá hacia el
+                            territorio coreano y el resto del planeta. 
+                   
+                        </p>
+                        <p>
+                            Nuestra misión es abrir las puertas de la literatura para que nadie se quede afuera. 
+                            Editamos con la convicción de que las historias pertenecen a todos, adaptando formatos para personas con 
+                            capacidades diversas o que están empezando a leer. 
+                            Queremos que la palabra escrita sea un derecho compartido y sin distancias.
+                        </p>
+                    </div>
+                    
+                    <a href="#contacto" class="btn btn-primary" data-reveal>
+                        <span class="btn-text">Publicar con nosotros</span>
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+                
+                <div class="about-visual">
+                    <div class="about-images">
+                        <div class="about-image about-image--1" data-reveal data-parallax="0.1">
+                            <img src="imagenes pagina general/verti.png" alt="Libros antiguos" loading="lazy">
+                        </div>
+                        <div class="about-image about-image--2" data-reveal data-parallax="0.15">
+                            <img src="imagenes pagina general/ab.png" alt="Biblioteca" loading="lazy">
+                        </div>
+                         <div class="about-image about-image--3" data-reveal data-parallax="0.15">
+                            <img src="imagenes pagina general/QRQ.png" alt="Biblioteca" loading="lazy">
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="values">
+                <div class="values-grid">
+                    <article class="value-card" data-reveal>
+                        <div class="value-number">01</div>
+                        <div class="value-content">
+                            <h3>Puente Cultural</h3>
+                            <p>Conectamos Argentina y Corea a través de historias que unen culturas, emociones y nuevas miradas del mundo.</p>
+                        </div>
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                    </article>
+                    
+                    <article class="value-card" data-reveal>
+                        <div class="value-number">02</div>
+                        <div class="value-content">
+                            <h3>Literatura Sin Fronteras</h3>
+                            <p>Editamos obras pensadas para viajar más allá del idioma, la distancia y los límites geográficos.</p>
+                        </div>
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                <path d="M2 12h20"/>
+                            </svg>
+                        </div>
+                    </article>
+                    
+                    <article class="value-card" data-reveal>
+                        <div class="value-number">03</div>
+                        <div class="value-content">
+                            <h3>Experiencia Accesible</h3>
+                            <p>Nuestros libros integran formatos accesibles, audiolibros, códigos QR y experiencias sonoras 
+                               para que cada historia pueda ser vivida de distintas maneras.</p>
+                        </div>
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authors Section -->
+    <section class="authors" id="autores">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">02</span>
+                    <span class="label-text">Nuestros Autores</span>
+                </div>
+                <h2 class="section-title" data-reveal>
+                    Voces que <span class="highlight">inspiran</span><br>y transforman
+                </h2>
+            </div>
+            
+            <div class="authors-grid">
+                <article class="author-card" data-reveal>
+                    <div class="author-image">
+                        <img src="imagenes autores/AUTORA SIL.jpeg" alt="Min-Ji Kim" loading="lazy" style= "object-fit: cover; object-position: center 3%; ;">
+                        <div class="author-overlay">
+                            <span class="author-books">1</span>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <span class="author-location">Argentina, Córdoba Capital</span>
+                        <h3 class="author-name">Monelli Silvana A.</h3>
+                        <p class="author-bio">Médica y escritora argentina.
+                            “HAN Una argentina con alma y corazón coreano” <br>
+                           es su primer libro y forma parte de una saga bilingüe español-coreano 
+                           <button id="verMas" class="btn btn-outline" onclick="verMas()" style="margin: 20px;">ver mas</button>
+                           <span id="monelli" class="oculto">
+                                orientada 
+                                al intercambio cultural y a nuevas formas de acceso a la lectura y 
+                                el aprendizaje.
+
+                                A través de códigos QR, recursos auditivos y herramientas visuales, sus obras buscan facilitar el acceso a la lectura y 
+                                el aprendizaje a personas con discapacidad visual, dificultades de alfabetización y distintas formas de aprendizaje.
+                           </span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="author-big" data-reveal>
+                    <h1>PROXIMAMENTE...</h1>
+                </article>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section class="catalog" id="catalogo">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">03</span>
+                    <span class="label-text">Catalogo</span>
+                </div>
+                <h2 class="section-title" data-reveal>
+                    Nuestra <span class="highlight">coleccion</span>
+                </h2>
+            </div>
+            
+            <div class="catalog-filters" data-reveal>
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="novela">Novela</button>
+                <button class="filter-btn" data-filter="poesia">Poesia</button>
+                <button class="filter-btn" data-filter="cuento">Cuento</button>
+                <button class="filter-btn" data-filter="ensayo">Ensayo</button>
+            </div>
+            
+            <div class="books-grid">
+                <article class="book-card" data-category="novela" data-reveal>
+                    <div class="book-cover book-cover--warm">
+                        <div class="book-spine"></div>
+                        <div class="book-front" style="background-image: url('IMAGENES LIBROS/tapa 1er libro.png'); background-size: cover; ">
+                        </div>
+                        <div class="book-hover">
+                            <p>Un libro sobre poesia en español y coreana con un secreto por descrubir.</p>
+                            <div class="book-meta">
+                                <span>94 pag</span>
+                                <span>2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details" style="flex-direction: column;">
+                        <span class="book-category">Poesia</span>
+                        <h4 class="book-title">HAN Una argentina con alma y corazon coreano</h4>
+                        <span class="book-author">Monelli Silvana A.</span>
+                        <div class="book-details">
+                            <span class="book-price">$40.000</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="book-card" data-category="poesia" data-reveal>
+                    <div class="book-cover book-cover--cool">
+                        <div class="book-spine"></div>
+                        <div class="book-front" style="background-image: url('IMAGENES LIBRO/FOTO PORTADA LIBRO VERSOS.png');">
+                            <span class="book-category">Poesia</span>
+                            <h4 class="book-title">Versos del Rio de la Plata</h4>
+                            <span class="book-author">Santiago Reyes</span>
+                        </div>
+                        <div class="book-hover">
+                            <p>Una coleccion donde formas poeticas de todo el mundo se encuentran con el ritmo del tango.</p>
+                            <div class="book-meta">
+                                <span>156 pag</span>
+                                <span>2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">$1.950</span>
+                        
+                    </div>
+                </article>
+                
+                <article class="book-card" data-category="novela" data-reveal>
+                    <div class="book-cover book-cover--neutral">
+                        <div class="book-spine"></div>
+                        <div class="book-front" style="background-image: url('IMAGENES LIBRO/FOTO PORTADA LIBRO ECOS DE SIBERIA.png');">
+                            <span class="book-category">Novela</span>
+                            <h4 class="book-title">Ecos de Siberia</h4>
+                            <span class="book-author">Elena Voronova</span>
+                        </div>
+                        <div class="book-hover">
+                            <p>Una novela que sigue a Natasha navegando entre dos mundos culturales.</p>
+                            <div class="book-meta">
+                                <span>288 pag</span>
+                                <span>2024</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">$2.400</span>
+                        
+                    </div>
+                </article>
+                
+                <article class="book-card" data-category="novela" data-reveal>
+                    <div class="book-cover book-cover--warm">
+                        <div class="book-spine"></div>
+                        <div class="book-front">
+                            <span class="book-category">Novela</span>
+                            <h4 class="book-title">Los colores de Dakar</h4>
+                            <span class="book-author">Amara Diallo</span>
+                        </div>
+                        <div class="book-hover">
+                            <p>Primera parte de una trilogia epica que narra la historia de mujeres africanas.</p>
+                            <div class="book-meta">
+                                <span>412 pag</span>
+                                <span>2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">$3.100</span>
+                        
+                    </div>
+                </article>
+                
+                <article class="book-card" data-category="cuento" data-reveal>
+                    <div class="book-cover book-cover--cool">
+                        <div class="book-spine"></div>
+                        <div class="book-front">
+                            <span class="book-category">Cuento</span>
+                            <h4 class="book-title">Historias de Shinjuku</h4>
+                            <span class="book-author">Hiroshi Tanaka</span>
+                        </div>
+                        <div class="book-hover">
+                            <p>Doce cuentos ambientados en Tokyo. Desde el dueno de un izakaya hasta una joven traductora.</p>
+                            <div class="book-meta">
+                                <span>198 pag</span>
+                                <span>2021</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">$2.200</span>
+                        
+                    </div>
+                </article>
+                
+                <article class="book-card" data-category="ensayo" data-reveal>
+                    <div class="book-cover book-cover--neutral">
+                        <div class="book-spine"></div>
+                        <div class="book-front" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&h=400&fit=crop');">
+                            <span class="book-category">Ensayo</span>
+                            <h4 class="book-title">Puentes literarios</h4>
+                            <span class="book-author">Min-Ji Kim</span>
+                        </div>
+                        <div class="book-hover">
+                            <p>Una reflexion profunda sobre la traduccion literaria y el dialogo intercultural.</p>
+                            <div class="book-meta">
+                                <span>234 pag</span>
+                                <span>2022</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <span class="book-price">$2.100</span>
+                        
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonios">
+        <div class="container">
+            <div class="section-header section-header--light">
+                <div class="section-label" data-reveal>
+                    <span class="label-number">04</span>
+                    <span class="label-text">Testimonios</span>
+                </div>
+                <h2 class="section-title" data-reveal>
+                    Lo que dicen nuestros<br><span class="highlight">autores</span>
+                </h2>
+            </div>
+            
+            <div class="testimonials-grid">
+                <article class="testimonial" data-reveal>
+                    <div class="testimonial-content">
+                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <blockquote>
+                            HAN-RA no es solo una editorial, es una familia que entiende la importancia de 
+                            preservar nuestra identidad cultural mientras la compartimos con el mundo.
+                        </blockquote>
+                    </div>
+                    <footer class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Min-Ji Kim">
+                        <div class="testimonial-info">
+                            <cite>Min-Ji Kim</cite>
+                            <span>Autora de "El jardin de los cerezos portenos"</span>
+                        </div>
+                    </footer>
+                </article>
+                
+                <article class="testimonial" data-reveal>
+                    <div class="testimonial-content">
+                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <blockquote>
+                            Encontrar una editorial que valorara mi fusion de culturas parecia imposible 
+                            hasta que conoci HAN-RA. Su vision intercultural transformo mi carrera.
+                        </blockquote>
+                    </div>
+                    <footer class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Santiago Reyes">
+                        <div class="testimonial-info">
+                            <cite>Santiago Reyes</cite>
+                            <span>Autor de "Versos del Rio de la Plata"</span>
+                        </div>
+                    </footer>
+                </article>
+                
+                <article class="testimonial" data-reveal>
+                    <div class="testimonial-content">
+                        <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                        </svg>
+                        <blockquote>
+                            El profesionalismo y la calidez del equipo de HAN-RA hacen que cada proyecto 
+                            sea especial. Han logrado que mis libros lleguen a lectores en todo el continente.
+                        </blockquote>
+                    </div>
+                    <footer class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop&crop=face" alt="Amara Diallo">
+                        <div class="testimonial-info">
+                            <cite>Amara Diallo</cite>
+                            <span>Autora de "Los colores de Dakar"</span>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-content">
+                    <div class="section-label" data-reveal>
+                        <span class="label-number">05</span>
+                        <span class="label-text">Contacto</span>
+                    </div>
+                    
+                    <h2 class="contact-title" data-reveal>
+                        Hablemos de tu<br><span class="highlight">proximo proyecto</span>
+                    </h2>
+                    
+                    <p class="contact-description" data-reveal>
+                        Estamos siempre en busqueda de nuevas voces de cualquier parte del mundo. 
+                        Si tienes un manuscrito o una propuesta editorial, nos encantaria conocerla.
+                    </p>
+                    
+                    <div class="contact-info" data-reveal>
+                        <a href="mailto:editorialhanra@gmail.com" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">editorialhanra@gmail.com</span>
+                            </div>
+                        </a>
+                        
+                        <a href="tel:+541145678900" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Telefono</span>
+                                <span class="contact-value">+54 3543556311</span>
+                            </div>
+                        </a>
+                        
+                        <a href="https://maps.google.com" target="_blank" rel="noopener" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Direccion</span>
+                                <span class="contact-value">Av. Corrientes 1234, CABA</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm" data-reveal>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Asunto</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Selecciona una opcion</option>
+                            <option value="manuscrito">Enviar manuscrito</option>
+                            <option value="colaboracion">Propuesta de colaboracion</option>
+                            <option value="prensa">Prensa y medios</option>
+                            <option value="general">Consulta general</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <span class="btn-text">Enviar mensaje</span>
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-cta">
+            <div class="container">
+                <div class="cta-content" data-reveal>
+                    <h3>Tienes una historia que contar?</h3>
+                    <p>Unete a nuestra familia de autores globales</p>
+                    <a href="#contacto" class="btn btn-primary">
+                        <span class="btn-text">Comenzar</span>
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="#inicio" class="logo logo--light">
+                            <div class="logo-mark">
+                                <img src="logo/HAN - RA (1).png" alt="">
+                            </div>
+                            <div class="logo-text">
+                                <span class="logo-name">HAN-RA</span>
+                                <span class="logo-tagline">EDITORIAL</span>
+                            </div>
+                        </a>
+                        <p class="footer-description">
+                            Literatura que une culturas.<br>
+                            Voces de todo el mundo, un solo hogar.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Instagram" class="social-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="2" y="2" width="20" height="20" rx="5"/>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="Twitter" class="social-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5 0-.278-.028-.556-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="LinkedIn" class="social-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                    <rect x="2" y="9" width="4" height="12"/>
+                                    <circle cx="4" cy="4" r="2"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Navegacion</h4>
+                            <ul>
+                                <li><a href="#inicio">Inicio</a></li>
+                                <li><a href="#nosotros">Nosotros</a></li>
+                                <li><a href="#autores">Autores</a></li>
+                                <li><a href="#catalogo">Catalogo</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Editorial</h4>
+                            <ul>
+                                <li><a href="#contacto">Enviar manuscrito</a></li>
+                                <li><a href="#contacto">Prensa</a></li>
+                                <li><a href="#contacto">Distribuidores</a></li>
+                                <li><a href="#contacto">Derechos</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Legal</h4>
+                            <ul>
+                                <li><a href="#">Terminos de uso</a></li>
+                                <li><a href="#">Privacidad</a></li>
+                                <li><a href="#">Cookies</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <p>2024 HAN-RA Editorial. Todos los derechos reservados.</p>
+                <p class="footer-motto">
+                    <span></span>
+                    <span class="separator">|</span>
+                    <span>La literatura conecta mundos</span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

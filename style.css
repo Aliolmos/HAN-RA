@@ -1,0 +1,2009 @@
+/* ========================================
+   HAN-RA EDITORIAL - Premium Styles v2
+   Pure CSS - No frameworks
+   ======================================== */
+
+/* Variables globales (Custom Properties) */
+:root {
+    /* Colores - Paleta refinada y minimalista */
+    --color-black: #0a0a0a; /* Negro profundo */
+    --color-charcoal: #141414; /* Carbón */
+    --color-dark: #1a1a1a; /* Oscuro */
+    --color-gray-900: #252525; /* Gris muy oscuro */
+    --color-gray-700: #4a4a4a; /* Gris oscuro */
+    --color-gray-500: #6a6a6a; /* Gris medio */
+    --color-gray-400: #8a8a8a; /* Gris claro */
+    --color-gray-300: #aaa; /* Gris más claro */
+    --color-gray-100: #e5e5e5; /* Gris muy claro */
+    --color-white: #fafafa; /* Blanco roto */
+    --color-cream: #f5f3ef; /* Fondo cálido crema */
+    
+    /* Acento - Dorado cálido */
+    --color-accent: #977746; /* Dorado principal */
+    --color-accent-light: #e4c45a; /* Dorado claro */
+    --color-accent-dark: #a68820; /* Dorado oscuro */
+    
+    /* Tipografía */
+    --font-display: 'Playfair Display', Georgia, serif; /* Fuente para títulos */
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; /* Fuente para cuerpo */
+    
+    /* Escala de espaciado */
+    --space-1: 0.25rem; /* 4px */
+    --space-2: 0.5rem; /* 8px */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem; /* 16px */
+    --space-5: 1.25rem; /* 20px */
+    --space-6: 1.5rem; /* 24px */
+    --space-8: 2rem; /* 32px */
+    --space-10: 2.5rem; /* 40px */
+    --space-12: 3rem; /* 48px */
+    --space-16: 4rem; /* 64px */
+    --space-20: 5rem; /* 80px */
+    --space-24: 6rem; /* 96px */
+    --space-32: 8rem; /* 128px */
+    
+    /* Transiciones */
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Curva por defecto */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* Curva de salida */
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* Curva entrada/salida */
+    --duration-fast: 150ms; /* Rápido */
+    --duration-base: 300ms; /* Normal */
+    --duration-slow: 600ms; /* Lento */
+    
+    /* Bordes redondeados */
+    --radius-sm: 4px; /* Pequeño */
+    --radius-md: 8px; /* Mediano */
+    --radius-lg: 12px; /* Grande */
+    --radius-xl: 20px; /* Extra grande */
+    --radius-full: 9999px; /* Círculo perfecto */
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); /* Sombra ligera */
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08); /* Sombra media */
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.12); /* Sombra grande */
+    --shadow-xl: 0 24px 60px rgba(0,0,0,0.16); /* Sombra extra grande */
+}
+
+/* ========================================
+   Reset & Base (Normalización)
+   ======================================== */
+/* Selector universal para resetear márgenes y paddings */
+*, *::before, *::after {
+    margin: 0; /* Sin margen exterior */
+    padding: 0; /* Sin relleno interior */
+    box-sizing: border-box; /* El ancho incluye bordes y rellenos */
+}
+
+/* Elemento raíz HTML */
+html {
+    scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en anclas */
+    font-size: 16px; /* Base para unidades rem (1rem = 16px) */
+    scroll-padding-top: 80px; /* Compensa el header fijo al hacer scroll */
+}
+
+/* Cuerpo de la página */
+body {
+    font-family: var(--font-body); /* Fuente del cuerpo */
+    font-size: 1rem; /* Tamaño base (16px) */
+    line-height: 1.6; /* Altura de línea */
+    color: var(--color-gray-900); /* Color de texto principal */
+    background-color: var(--color-cream); /* Fondo crema */
+    -webkit-font-smoothing: antialiased; /* Suaviza fuentes en WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Suaviza fuentes en macOS */
+    overflow-x: hidden; /* Evita scroll horizontal no deseado */
+}
+
+/* Clase para bloquear scroll (menú móvil abierto) */
+body.no-scroll {
+    overflow: hidden; /* Oculta el desbordamiento, impide hacer scroll */
+}
+
+/* Imágenes */
+img {
+    max-width: 100%; /* Nunca superan el ancho del contenedor */
+    height: auto; /* Altura automática para mantener proporción */
+    display: block; /* Evita espacio extra debajo de la imagen */
+}
+
+/* Enlaces */
+a {
+    color: inherit; /* Hereda el color del padre */
+    text-decoration: none; /* Sin subrayado */
+}
+
+/* Botones */
+button {
+    font-family: inherit; /* Hereda la fuente del body */
+    cursor: pointer; /* Cursor tipo mano */
+    border: none; /* Sin borde */
+    background: none; /* Sin fondo */
+}
+
+/* Listas */
+ul, ol {
+    list-style: none; /* Elimina viñetas y números */
+}
+
+/* Campos de formulario */
+input, textarea, select {
+    font-family: inherit; /* Hereda la fuente */
+    font-size: inherit; /* Hereda el tamaño de fuente */
+}
+
+/* ========================================
+   Noise Overlay (Textura de ruido)
+   ======================================== */
+/* Capa de ruido fija sobre toda la página */
+.noise-overlay {
+    position: fixed; /* Posición fija respecto a la ventana */
+    inset: 0; /* top,right,bottom,left = 0 (ocupa toda la pantalla) */
+    pointer-events: none; /* Permite hacer clic a través de ella */
+    z-index: 9998; /* Por debajo del cursor pero encima de casi todo */
+    opacity: 0.03; /* Muy sutil, apenas perceptible */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); /* SVG con ruido fractal */
+}
+
+/* ========================================
+   Custom Cursor (Cursor personalizado)
+   ======================================== */
+/* Contenedor del cursor y su seguidor */
+.cursor,
+.cursor-follower {
+    position: fixed; /* Fijo en la pantalla */
+    pointer-events: none; /* No interfieren con clics */
+    z-index: 10000; /* Máximo z-index para estar siempre arriba */
+    border-radius: 50%; /* Forma circular */
+    transform: translate(-50%, -50%); /* Centra el punto de origen al centro del elemento */
+    opacity: 0; /* Invisible hasta que el mouse entre a la página */
+    transition: opacity 0.3s; /* Suave aparición */
+}
+
+/* Muestra los cursores cuando el mouse está sobre la página */
+body:hover .cursor,
+body:hover .cursor-follower {
+    opacity: 1; /* Totalmente visible */
+}
+
+/* Punto pequeño del cursor principal */
+.cursor {
+    width: 8px; /* Ancho pequeño */
+    height: 8px; /* Alto pequeño */
+    background: var(--color-accent); /* Color dorado */
+    mix-blend-mode: difference; /* Modo de mezcla para contraste */
+}
+
+/* Círculo grande que sigue con retraso */
+.cursor-follower {
+    width: 40px; /* Tamaño base */
+    height: 40px;
+    border: 1px solid var(--color-accent); /* Borde dorado */
+    transition: transform 0.15s var(--ease), width 0.3s, height 0.3s, opacity 0.3s; /* Transiciones suaves */
+}
+
+/* Cuando pasa sobre elementos interactivos, se agranda */
+.cursor-follower.hover {
+    width: 60px; /* Más grande */
+    height: 60px;
+    border-color: var(--color-accent-light); /* Borde dorado claro */
+}
+
+/* En tablets y móviles, oculta el cursor personalizado para no molestar */
+@media (max-width: 1024px) {
+    .cursor, .cursor-follower { display: none; } /* Los oculta completamente */
+}
+
+/* ========================================
+   Loading Screen (Pantalla de carga)
+   ======================================== */
+/* Pantalla de carga inicial */
+.loader {
+    position: fixed; /* Fija, cubre toda la pantalla */
+    inset: 0; /* top/left/right/bottom = 0 */
+    background: var(--color-black); /* Fondo negro */
+    display: flex; /* Flex para centrar contenido */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    z-index: 10001; /* Por encima de todo */
+    transition: opacity 0.8s var(--ease-out), visibility 0.8s; /* Desaparición suave */
+}
+
+/* Estado oculto del loader (después de cargar) */
+.loader.hidden {
+    opacity: 0; /* Invisible */
+    visibility: hidden; /* No ocupa espacio, no recibe eventos */
+}
+
+/* Contenedor del contenido del loader */
+.loader-content {
+    text-align: center; /* Texto centrado */
+}
+
+/* Logotipo animado con círculo */
+.loader-logo {
+    position: relative; /* Para posicionar el texto absoluto */
+    width: 200px; /* Ancho fijo */
+    height: 200px; /* Alto fijo */
+    margin: 0 auto var(--space-8); /* Centrado horizontal, margen inferior */
+}
+
+/* SVG del círculo */
+.loader-circle {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    height: 100%; /* Ocupa todo el alto */
+    color: var(--color-accent); /* Color dorado */
+}
+
+/* Línea de progreso del círculo (se dibuja con animación) */
+.loader-circle-progress {
+    stroke-dasharray: 283; /* Longitud de la circunferencia (2*pi*r con r=45 aprox) */
+    stroke-dashoffset: 283; /* Empieza sin dibujar */
+    transform-origin: center; /* Gira desde el centro */
+    transform: rotate(-90deg); /* Comienza desde la parte superior */
+    animation: loaderProgress 1.5s var(--ease-out) forwards; /* Animación que dibuja */
+}
+
+/* Animación que dibuja el círculo */
+@keyframes loaderProgress {
+    to { stroke-dashoffset: 0; } /* Hasta que el trazo esté completo */
+}
+
+/* Envoltura del texto central (carácter) */
+.loader-text-wrap {
+    position: absolute; /* Absoluto respecto a .loader-logo */
+    inset: 0; /* Ocupa todo el espacio */
+    display: flex; /* Flex para centrar */
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    left: 22%;
+    
+}
+
+/* Carácter animado (latido) */
+.loader-char {
+    font-size: 2.5rem; /* Tamaño grande */
+    color: var(--color-accent); /* Dorado */
+    animation: loaderPulse 1.5s ease-in-out infinite; /* Animación de pulsación infinita */
+}
+
+/* Animación de pulsación */
+@keyframes loaderPulse {
+    0%, 100% { opacity: 1; transform: scale(1); } /* Normal */
+    50% { opacity: 0.7; transform: scale(0.95); } /* Se reduce y desvanece */
+}
+
+/* Parte inferior del loader */
+.loader-bottom {
+    display: flex; /* Flex en columna */
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4); /* Espaciado entre elementos */
+}
+
+/* Línea que se extiende horizontalmente */
+.loader-line {
+    width: 60px; /* Ancho final */
+    height: 1px; /* Muy delgada */
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent); /* Gradiente dorado */
+    animation: loaderLine 1.5s var(--ease-out) forwards; /* Animación de extensión */
+    transform: scaleX(0); /* Comienza con ancho 0 */
+}
+
+/* Animación de extensión de línea */
+@keyframes loaderLine {
+    to { transform: scaleX(1); } /* Se extiende hasta ancho completo */
+}
+
+/* Texto pequeño debajo */
+.loader-tagline {
+    font-size: 0.75rem; /* Letra pequeña */
+    font-weight: 500; /* Peso medio */
+    letter-spacing: 0.3em; /* Espaciado amplio entre letras */
+    color: var(--color-gray-500); /* Gris medio */
+    text-transform: uppercase; /* Todo mayúsculas */
+}
+
+/* ========================================
+   Typography (Estilos tipográficos)
+   ======================================== */
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display); /* Fuente serif elegante */
+    font-weight: 500; /* Peso seminegrita */
+    line-height: 1.1; /* Interlineado ajustado */
+    color: var(--color-black); /* Color negro */
+}
+
+/* Resaltado de texto (color acento y cursiva) */
+.highlight {
+    color: var(--color-accent); /* Dorado */
+    font-style: italic; /* Cursiva */
+}
+
+/* ========================================
+   Layout (Estructura de contenedores y secciones)
+   ======================================== */
+/* Contenedor principal centrado */
+.container {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 1320px; /* Máximo ancho para pantallas grandes */
+    margin: 0 auto; /* Centrado horizontal */
+    padding: 0 var(--space-6); /* Relleno lateral (1.5rem) */
+}
+
+/* Cada sección */
+section {
+    position: relative; /* Para posicionar elementos absolutos hijos */
+    padding: var(--space-32) 0; /* Espaciado vertical enorme (8rem arriba y abajo) */
+}
+
+/* ========================================
+   Buttons (Estilos de botones)
+   ======================================== */
+/* Botón base */
+.btn {
+    display: inline-flex; /* Flex en línea para alinear icono y texto */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    gap: var(--space-3); /* Espaciado entre texto e icono */
+    padding: var(--space-4) var(--space-8); /* Relleno interno */
+    font-size: 0.875rem; /* Tamaño letra pequeño */
+    font-weight: 500; /* Peso medio */
+    letter-spacing: 0.02em; /* Ligero espaciado */
+    border-radius: var(--radius-full); /* Bordes redondeados (píldora) */
+    transition: all var(--duration-base) var(--ease); /* Transición suave para todos los cambios */
+    position: relative; /* Para posicionar pseudo-elementos */
+    overflow: hidden; /* Esconde el pseudo-elemento que se desliza */
+}
+
+/* Texto del botón (por encima del pseudo-elemento) */
+.btn-text {
+    position: relative;
+    z-index: 1; /* Asegura que esté por encima */
+}
+
+/* Icono dentro del botón */
+.btn-icon {
+    position: relative;
+    z-index: 1;
+    width: 18px; /* Tamaño pequeño */
+    height: 18px;
+    transition: transform var(--duration-base) var(--ease); /* Animación al hacer hover */
+}
+
+/* SVG dentro del icono */
+.btn-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Botón primario (fondo negro) */
+.btn-primary {
+    background: var(--color-black); /* Negro */
+    color: var(--color-white); /* Texto blanco */
+}
+
+/* Capa dorada que sube al hacer hover */
+.btn-primary::before {
+    content: ''; /* Necesario para pseudo-elemento */
+    position: absolute;
+    inset: 0; /* Cubre todo el botón */
+    background: var(--color-accent); /* Fondo dorado */
+    transform: translateY(100%); /* Comienza totalmente abajo (oculto) */
+    transition: transform var(--duration-base) var(--ease); /* Animación al subir */
+}
+
+/* Hover del botón primario cambia color de texto */
+.btn-primary:hover {
+    color: var(--color-black); /* Texto negro */
+}
+
+/* Al hacer hover, la capa dorada sube */
+.btn-primary:hover::before {
+    transform: translateY(0); /* Se posiciona encima */
+}
+
+/* Icono se desplaza hacia la derecha al hacer hover */
+.btn-primary:hover .btn-icon {
+    transform: translateX(4px); /* Mueve 4px a la derecha */
+}
+
+/* Botón de contorno */
+.btn-outline {
+    background: transparent; /* Fondo transparente */
+    color: var(--color-black); /* Texto negro */
+    border: 1px solid var(--color-gray-300); /* Borde gris */
+}
+
+/* Hover del botón outline se llena de negro */
+.btn-outline:hover {
+    border-color: var(--color-black); /* Borde se vuelve negro */
+    background: var(--color-black); /* Fondo negro */
+    color: var(--color-white); /* Texto blanco */
+}
+
+/* Botón para navegación (header) */
+.btn-nav {
+    padding: var(--space-3) var(--space-6); /* Relleno más pequeño */
+    background: var(--color-black); /* Negro */
+    color: var(--color-white); /* Blanco */
+    font-size: 0.8125rem; /* Letra aún más pequeña */
+}
+
+/* Hover del botón nav cambia a dorado */
+.btn-nav:hover {
+    background: var(--color-accent); /* Fondo dorado */
+    color: var(--color-black); /* Texto negro */
+}
+
+/* Botón que ocupa todo el ancho */
+.btn-full {
+    width: 100%; /* Ancho completo */
+}
+
+/* ========================================
+   Header & Navigation (Barra fija y menú)
+   ======================================== */
+/* Header fijo con efecto vidrio */
+.header {
+    position: fixed; /* Fijo en la parte superior */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Por encima del contenido */
+    background: rgba(245, 243, 239, 0.85); /* Fondo crema semitransparente */
+    backdrop-filter: blur(20px); /* Efecto vidrio esmerilado */
+    -webkit-backdrop-filter: blur(20px); /* Para Safari */
+    border-bottom: 1px solid transparent; /* Borde inferior invisible inicialmente */
+    transition: all var(--duration-base) var(--ease); /* Transición suave */
+}
+
+/* Cuando se scrollea, aparece borde inferior sutil */
+.header.scrolled {
+    border-bottom-color: rgba(0,0,0,0.06); /* Borde gris muy tenue */
+}
+
+/* Barra de navegación */
+.nav {
+    display: flex; /* Flex para alinear elementos */
+    align-items: center; /* Centrado vertical */
+    justify-content: space-between; /* Logo izquierda, botón derecha, menú centro */
+    height: 72px; /* Altura fija */
+    max-width: 1320px; /* Mismo ancho que el container */
+    margin: 0 auto; /* Centrado */
+    padding: 0 var(--space-6); /* Relleno lateral */
+}
+
+/* Logotipo */
+.logo {
+    display: flex; /* Flex horizontal */
+    align-items: center;
+    gap: var(--space-3); /* Espaciado entre el cuadrado y el texto */
+}
+
+/* Cuadrado del logo */
+.logo-mark {
+    width: 70px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-); /* Fondo blanco */
+    border-radius: var(--radius-md); /* Bordes redondeados */
+    transition: transform var(--duration-base) var(--ease); /* Animación para rotación */
+    left: -60px; /* Desplazado ligeramente a la izquierda para superponerse al texto */
+}
+
+/* Al hover del logo, el cuadrado rota ligeramente */
+.logo:hover .logo-mark {
+    transform: rotate(-4deg); /* Rotación leve */
+}
+
+/* Carácter dentro del logo (HR o 文) */
+.logo-char {
+    font-size: 1.25rem; /* Tamaño mediano */
+    color: var(--color-accent); /* Dorado */
+    
+}
+
+/* Texto del logo (nombre y tagline) */
+.logo-text {
+    display: flex;
+    flex-direction: column; /* Columna para que estén uno arriba del otro */
+    line-height: 1; /* Interlineado ajustado */
+   
+}
+
+/* Nombre HAN-RA */
+.logo-name {
+    font-family: var(--font-display); /* Fuente elegante */
+    font-size: 1.25rem;
+    font-weight: 600; /* Seminegrita */
+    letter-spacing: 0.05em; /* Espaciado */
+ 
+}
+
+/* Tagline "EDITORIAL" */
+.logo-tagline {
+    font-size: 0.5625rem; /* Muy pequeño */
+    font-weight: 600;
+    letter-spacing: 0.2em; /* Espaciado grande */
+    color: var(--color-gray-500); /* Gris medio */
+    margin-top: 2px; /* Separación del nombre */
+}
+
+/* Contenedor del menú central (solo desktop) */
+.nav-center {
+    position: absolute; /* Posición absoluta respecto al nav */
+    left: 50%; /* Centrado horizontal */
+    transform: translateX(-50%); /* Compensa el 50% para centrar exacto */
+}
+
+/* Lista del menú */
+.nav-menu {
+    display: flex; /* Horizontal en desktop */
+    align-items: center;
+    gap: var(--space-10); /* Espaciado grande entre enlaces */
+}
+
+/* Enlaces del menú */
+.nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-700); /* Gris oscuro */
+    position: relative; /* Para posicionar el subrayado */
+    padding: var(--space-2) 0; /* Relleno vertical */
+    transition: color var(--duration-fast); /* Cambio de color rápido */
+}
+
+/* Línea decorativa debajo del enlace (subrayado animado) */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Pegado al borde inferior */
+    left: 0;
+    width: 0; /* Comienza con ancho 0 */
+    height: 1px; /* Altura de línea */
+    background: var(--color-accent); /* Color dorado */
+    transition: width var(--duration-base) var(--ease); /* Animación de ancho */
+}
+
+/* Hover o activo cambia color y muestra subrayado completo */
+.nav-link:hover,
+.nav-link.active {
+    color: var(--color-black); /* Negro */
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%; /* Subrayado ocupa todo el ancho */
+}
+
+/* Contenedor derecho del header (botón + menú hamburguesa) */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4); /* Espaciado */
+}
+
+/* Botón hamburguesa (visible en móvil) */
+.nav-toggle {
+    display: none; /* Oculto por defecto (se muestra en responsive) */
+    width: 40px;
+    height: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px; /* Separación entre líneas */
+}
+
+/* Líneas del botón hamburguesa */
+.nav-toggle span {
+    width: 20px;
+    height: 1.5px; /* Muy delgadas */
+    background: var(--color-black); /* Negras */
+    transition: all var(--duration-base) var(--ease); /* Transición para convertirse en X */
+}
+
+/* Cuando el menú está activo, las líneas forman una X */
+.nav-toggle.active span:first-child {
+    transform: rotate(45deg) translate(3px, 3px); /* Primera línea rota 45° y desplazada */
+}
+.nav-toggle.active span:last-child {
+    transform: rotate(-45deg) translate(3px, -3px); /* Segunda línea rota -45° */
+}
+
+/* ========================================
+   Hero Section (Sección principal de inicio)
+   ======================================== */
+/* Sección hero */
+.hero {
+    min-height: 100vh; /* Altura mínima de toda la pantalla */
+    display: flex; /* Flex en columna */
+    flex-direction: column;
+    padding-top: 72px; /* Compensa header fijo */
+    position: relative;
+    overflow: hidden; /* Esconde desbordes de los orbes */
+}
+
+/* Fondo del hero (capas absolutas) */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* No interfiere con clics */
+}
+
+/* Líneas de cuadrícula de fondo */
+.hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), /* Líneas verticales */
+        linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px); /* Líneas horizontales */
+    background-size: 80px 80px; /* Tamaño de cada celda de la cuadrícula */
+}
+
+/* Orbes de gradiente difuminados (efecto de luz) */
+.hero-gradient-orb {
+    position: absolute;
+    border-radius: 50%; /* Circulares */
+    filter: blur(100px); /* Mucho desenfoque */
+    opacity: 0.4; /* Semitransparentes */
+}
+
+/* Primer orbe (arriba derecha) */
+.hero-gradient-orb--1 {
+    top: -20%; /* Sale un poco por arriba */
+    right: -10%; /* Sale un poco por derecha */
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.3) 0%, transparent 70%); /* Gradiente radial dorado */
+}
+
+/* Segundo orbe (abajo izquierda) */
+.hero-gradient-orb--2 {
+    bottom: -30%;
+    left: -20%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.15) 0%, transparent 70%); /* Más tenue */
+}
+
+/* Contenido principal del hero (dos columnas) */
+.hero-content {
+    flex: 1; /* Ocupa el espacio disponible */
+    display: grid; /* Grid para dos columnas */
+    grid-template-columns: 1.5fr 1fr; /* Mitad y mitad */
+    align-items: center; /* Centra verticalmente */
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-6); /* Relleno interno */
+    width: 100%;
+}
+
+/* Línea superior con "Nueva colección 2026" */
+.hero-eyebrow {
+    display: inline-flex; /* Flex en línea */
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8); /* Separación del título */
+}
+
+/* Línea decorativa */
+.eyebrow-line {
+    width: 40px;
+    height: 1px;
+    background: var(--color-accent); /* Dorado */
+}
+
+/* Texto del eyebrow */
+.eyebrow-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase; /* Mayúsculas */
+    color: var(--color-accent-dark); /* Dorado oscuro */
+}
+
+/* Contenedor del título principal */
+.hero-title {
+    margin-bottom: var(--space-8);
+}
+
+/* Línea individual del título (para animación) */
+.hero-title-line {
+    display: block;
+    overflow: hidden; /* Oculta el desborde para animación de entrada */
+}
+
+/* Cada palabra del título */
+.hero-title .word {
+    display: inline-block;
+    font-size: clamp(3rem, 7vw, 5.5rem); /* Tamaño responsivo: mínimo 3rem, ideal 7vw, máximo 5.5rem */
+    font-weight: 500;
+    line-height: 1.05; /* Interlineado ajustado */
+    letter-spacing: -0.02em; /* Ligero apriete */
+}
+
+/* Palabra con clase accent (dorada e itálica) */
+.hero-title .word.accent {
+    color: var(--color-accent);
+    font-style: italic;
+}
+
+/* Descripción del hero */
+.hero-description {
+    font-size: 1.125rem; /* Un poco más grande que el texto normal */
+    line-height: 1.7;
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-10);
+}
+
+/* Contenedor de botones CTA */
+.hero-cta {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap; /* En móviles se envuelven */
+}
+
+/* Columna derecha (visualización con tarjetas) */
+.hero-visual {
+    position: relative;
+    height: 100%;
+    min-height: 500px; /* Altura mínima para que se vea bien */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    right: -80px; /* Desplazado ligeramente a la derecha para superponerse al borde del container */
+}
+
+/* Contenedor de las tarjetas apiladas */
+.hero-cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tarjeta individual del hero */
+.hero-card {
+    position: absolute; /* Posicionadas absolutamente para superposición */
+    width: 180px;
+    height: 250px;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl); /* Sombra grande */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--duration-slow) var(--ease-out); /* Transición lenta y suave */
+    cursor: pointer;
+}
+
+
+/* Primera tarjeta (izquierda, rotada) */
+.hero-card--1 {
+    transform: rotate(-12deg) translateX(-120px); /* Rotada y desplazada a la izquierda */
+    background: linear-gradient(145deg, #ccb28c 0%, #fde8c8 100%); /* Gradiente cálido */
+    z-index: 1;
+}
+
+/* Segunda tarjeta (centro, ligeramente arriba) */
+.hero-card--2 {
+    transform: translateY(-20px); /* Desplazada hacia arriba */
+    background: linear-gradient(145deg, #ccb28c 0%, #ffecd1 100%);
+    z-index: 3; /* La del centro tiene más z-index */
+}
+
+/* Tercera tarjeta (derecha, rotada) */
+.hero-card--3 {
+    transform: rotate(12deg) translateX(120px); /* Rotada y desplazada derecha */
+    background: linear-gradient(145deg, #ccb28c 0%, #fde8c8 100%);
+    z-index: 2;
+}
+
+
+/* Interior de la tarjeta */
+.hero-card-inner {
+    text-align: center;
+}
+
+/* Símbolo grande (carácter) */
+.hero-card-symbol {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--color-gray-900);
+    line-height: 1;
+    margin-bottom: var(--space-3);
+}
+
+/* Etiqueta debajo del símbolo */
+.hero-card-label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+
+/* Pie del hero (estadísticas y scroll) */
+.hero-footer {
+    display: flex;
+    justify-content: space-between; /* Estadísticas a la izquierda, scroll a la derecha */
+    align-items: flex-end;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 var(--space-6) var(--space-12); /* Relleno inferior */
+    width: 100%;
+}
+
+/* Contenedor de estadísticas */
+.hero-stats {
+    display: flex;
+    gap: var(--space-16); /* Separación grande entre cada estadística */
+}
+
+/* Cada bloque de estadística */
+.stat {
+    text-align: left;
+}
+
+/* Número grande de la estadística */
+.stat-number {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--color-black);
+    line-height: 1;
+}
+
+/* Etiqueta de la estadística */
+.stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-2);
+}
+
+/* Indicador de scroll */
+.hero-scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+/* Texto "Scroll" */
+.scroll-text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+
+/* Cilindro del indicador */
+.scroll-indicator {
+    width: 20px;
+    height: 32px;
+    border: 1.5px solid var(--color-gray-400);
+    border-radius: var(--radius-full);
+    display: flex;
+    justify-content: center;
+    padding-top: 6px; /* Para posicionar el punto */
+}
+
+/* Punto que se mueve dentro del cilindro */
+.scroll-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--color-gray-500);
+    border-radius: 50%;
+    animation: scrollDot 2s ease-in-out infinite; /* Animación infinita */
+}
+
+/* Animación del punto de scroll (sube y baja) */
+@keyframes scrollDot {
+    0%, 100% { transform: translateY(0); opacity: 1; } /* Posición inicial */
+    50% { transform: translateY(12px); opacity: 0.3; } /* Baja y se desvanece */
+}
+
+/* ========================================
+   Section Labels & Headers (Etiquetas de sección)
+   ======================================== */
+/* Etiqueta de sección (número + texto) */
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+/* Número de la sección (01, 02, etc.) */
+.label-number {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    font-family: var(--font-body);
+}
+
+/* Texto de la etiqueta (mayúsculas) */
+.label-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+
+/* Cabecera de sección */
+.section-header {
+    margin-bottom: var(--space-16); /* Espaciado inferior grande */
+}
+
+/* Variante para fondo oscuro (testimonios) */
+.section-header--light .label-text,
+.section-header--light .section-title {
+    color: var(--color-white); /* Texto blanco */
+}
+
+/* Título de sección responsivo */
+.section-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem); /* Mínimo 2.25rem, ideal 5vw, máximo 3.5rem */
+    line-height: 1.1;
+}
+
+/* ========================================
+   About Section (Sección Nosotros)
+   ======================================== */
+.about {
+    background: var(--color-cream); /* Fondo crema */
+}
+
+/* Grid de dos columnas en about */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-20); /* Separación extra grande */
+    margin-bottom: var(--space-24);
+}
+
+/* Título de la sección about */
+.about-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--space-8);
+}
+
+/* Texto del about */
+.about-text {
+    margin-bottom: var(--space-10);
+}
+
+/* Párrafo destacado (lead) */
+.about-text .lead {
+    font-size: 1.125rem;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-6);
+    line-height: 1.7;
+}
+
+/* Párrafos normales */
+.about-text p {
+    color: var(--color-gray-700);
+    line-height: 1.7;
+}
+
+/* Contenedor visual de imágenes */
+.about-visual {
+    position: relative;
+}
+
+/* Grid de imágenes (dos columnas) */
+.about-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    position: relative;
+}
+
+/* Cada imagen con borde redondeado y overflow hidden */
+.about-image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Imagen dentro de about-image */
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre el contenedor sin deformar */
+    transition: transform var(--duration-slow) var(--ease);
+}
+
+/* Hover en imagen escala */
+.about-image:hover img {
+    transform: scale(1.05); /* Zoom suave */
+}
+
+/* Primera imagen (ocupa dos filas) */
+.about-image--1 {
+    grid-row: span 2; /* Ocupa dos filas en el grid */
+    height: 620px; /* Altura fija */
+}
+
+/* Segunda imagen */
+.about-image--2 {
+    height: 400px;
+}
+
+/* Tercera imagen */
+.about-image--3 {
+    height: 200px;
+}
+
+
+/* ========================================
+   Values (Sección de valores)
+   ======================================== */
+.values {
+    padding-top: var(--space-16);
+    border-top: 1px solid rgba(0,0,0,0.06); /* Línea superior sutil */
+}
+
+/* Grid de valores (3 columnas) */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+}
+
+/* Tarjeta individual de valor */
+.value-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--duration-base) var(--ease);
+    border: 1px solid transparent; /* Borde transparente para evitar saltos en hover */
+}
+
+/* Hover en tarjeta de valor */
+.value-card:hover {
+    border-color: var(--color-accent); /* Borde dorado */
+    transform: translateY(-4px); /* Se eleva ligeramente */
+    box-shadow: var(--shadow-lg); /* Sombra grande */
+}
+
+/* Número (01, 02, 03) */
+.value-number {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: var(--space-6);
+}
+
+/* Contenido de texto */
+.value-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-3);
+}
+.value-content p {
+    font-size: 0.9375rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+}
+
+/* Icono decorativo en la esquina */
+.value-icon {
+    position: absolute;
+    top: var(--space-8);
+    right: var(--space-8);
+    width: 48px;
+    height: 48px;
+    color: var(--color-gray-200); /* Gris muy claro */
+    transition: color var(--duration-base);
+}
+
+/* Hover cambia color del icono */
+.value-card:hover .value-icon {
+    color: var(--color-accent); /* Dorado */
+}
+.value-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================
+   Authors Section (Sección Autores)
+   ======================================== */
+.authors {
+    background: var(--color-white); /* Fondo blanco */
+}
+
+/* Grid de autores (4 columnas) */
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-8);
+}
+
+/* Tarjeta de autor */
+.author-card {
+    background: var(--color-cream);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--duration-base) var(--ease);
+}
+.author-big {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    font-size: 20px;
+    background: radial-gradient(circle, white, rgb(220, 221, 208));
+    width: 100%;
+    grid-column: span 3; 
+    grid-row: span 1.8;  
+}
+
+.oculto{
+    display: none;
+}
+.visto{
+    display: block;
+}
+
+/* Hover levanta la tarjeta */
+.author-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Contenedor de la imagen del autor */
+.author-image {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+}
+
+/* Imagen dentro */
+.author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease);
+}
+
+/* Hover escala la imagen */
+.author-card:hover .author-image img {
+    transform: scale(1.08); /* Zoom más pronunciado */
+}
+
+/* Overlay que aparece al hover */
+.author-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%); /* Gradiente oscuro desde abajo */
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-6);
+    opacity: 0; /* Oculto inicialmente */
+    transition: opacity var(--duration-base);
+}
+
+/* Muestra el overlay al hover */
+.author-card:hover .author-overlay {
+    opacity: 1; /* Visible */
+}
+
+/* Etiqueta de cantidad de libros */
+.author-books {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-white);
+    background: var(--color-accent);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+}
+
+/* Información textual del autor */
+.author-info {
+    padding: var(--space-6);
+}
+
+/* Ubicación */
+.author-location {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-2);
+}
+
+/* Nombre del autor */
+.author-name {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-2);
+}
+
+/* Biografía corta */
+.author-bio {
+    font-size: 0.875rem;
+    color: var(--color-gray-600);
+    line-height: 1.5;
+}
+
+/* ========================================
+   Catalog Section (Sección Catálogo)
+   ======================================== */
+.catalog {
+    background: var(--color-cream);
+}
+
+/* Filtros del catálogo */
+.catalog-filters {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-12);
+    flex-wrap: wrap;
+}
+
+/* Botones de filtro */
+.filter-btn {
+    padding: var(--space-3) var(--space-6);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-gray-600);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-full);
+    transition: all var(--duration-fast);
+}
+
+/* Hover del filtro */
+.filter-btn:hover {
+    color: var(--color-black);
+    border-color: var(--color-black);
+}
+
+/* Botón activo */
+.filter-btn.active {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+/* Grid de libros (3 columnas) */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+}
+
+/* Tarjeta de libro */
+.book-card {
+    transition: all var(--duration-base) var(--ease);
+}
+
+/* Clase para ocultar libro al filtrar (JS) */
+.book-card.hidden {
+    display: none; /* Desaparece del flujo */
+}
+
+/* Portada del libro (relación 3:4) */
+.book-cover {
+    position: relative;
+    aspect-ratio: 3 / 4; /* Mantiene proporción 3:4 */
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--duration-base);
+
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease);
+    object-position: center top; /* Centra la parte superior de la imagen */
+    
+}
+
+
+/* Sombra más grande al hover del libro */
+.book-card:hover .book-cover {
+    box-shadow: var(--shadow-xl);
+}
+
+/* Lomo simulado (izquierda) */
+.book-spine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, transparent 100%); /* Sombra que simula lomo */
+    z-index: 2;
+}
+
+/* Variantes de color de portada (gradientes) */
+.book-cover--warm {
+    background: linear-gradient(145deg, #f5e6d0 0%, #e8d4b8 100%); /* Tonos cálidos */
+}
+.book-cover--cool {
+    background: linear-gradient(145deg, #d8e5f0 0%, #c5d8e8 100%); /* Tonos fríos */
+}
+.book-cover--neutral {
+    background: linear-gradient(145deg, #e8e4de 0%, #d8d2c8 100%); /* Tonos neutros */
+}
+
+/* Capa frontal de la portada (texto e imagen) */
+.book-front {
+    left: 0px;
+    right: 0;
+    padding: var(--space-6);
+    z-index: 1;
+    height: 100%;
+}
+
+/* Categoría del libro */
+.book-category {
+    display: inline-block;
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-600);
+    margin-bottom: var(--space-3);
+}
+
+/* Título del libro */
+.book-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+    line-height: 1.3;
+}
+
+/* Autor del libro */
+.book-author {
+    font-size: 0.8125rem;
+    color: var(--color-gray-600);
+}
+
+/* Hover con información adicional (aparece desde arriba) */
+.book-hover {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.92); /* Negro semitransparente */
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0; /* Oculto */
+    transition: opacity var(--duration-base);
+    z-index: 3;
+}
+
+/* Muestra el hover al pasar mouse */
+.book-card:hover .book-hover {
+    opacity: 1; /* Visible */
+}
+
+/* Texto dentro del hover */
+.book-hover p {
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+}
+
+/* Metadatos (páginas, año) */
+.book-meta {
+    display: flex;
+    gap: var(--space-6);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Detalles debajo de la portada (precio y botón) */
+.book-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4) 0;
+}
+
+/* Precio */
+.book-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+/* Botón circular de cada libro */
+.book-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-100);
+    border-radius: 50%;
+    color: var(--color-gray-700);
+    transition: all var(--duration-fast);
+}
+.book-btn svg {
+    width: 18px;
+    height: 18px;
+}
+.book-btn:hover {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+/* ========================================
+   Testimonials Section (Sección Testimonios)
+   ======================================== */
+.testimonials {
+    background: var(--color-black); /* Fondo negro */
+    color: var(--color-white);
+}
+
+/* Grid de testimonios (3 columnas) */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+}
+
+/* Tarjeta de testimonio */
+.testimonial {
+    background: rgba(255,255,255,0.03); /* Muy sutil */
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-lg);
+    padding: var(--space-10);
+    transition: all var(--duration-base) var(--ease);
+}
+
+/* Hover en testimonio */
+.testimonial:hover {
+    background: rgba(255,255,255,0.05); /* Un poco más claro */
+    border-color: rgba(201, 162, 39, 0.3); /* Borde dorado tenue */
+    transform: translateY(-4px); /* Elevación */
+}
+
+/* Contenido del testimonio */
+.testimonial-content {
+    margin-bottom: var(--space-8);
+}
+
+/* Icono de comillas */
+.testimonial-quote {
+    width: 32px;
+    height: 32px;
+    color: var(--color-accent);
+    opacity: 0.5;
+    margin-bottom: var(--space-6);
+}
+
+/* Cita */
+.testimonial blockquote {
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8); /* Blanco semitransparente */
+}
+
+/* Autor del testimonio */
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+/* Imagen del autor (circular) */
+.testimonial-author img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-accent); /* Borde dorado */
+}
+
+/* Info del autor */
+.testimonial-info {
+    display: flex;
+    flex-direction: column;
+}
+.testimonial-info cite {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--color-white);
+}
+.testimonial-info span {
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+}
+
+/* ========================================
+   Contact Section (Sección Contacto)
+   ======================================== */
+.contact {
+    background: var(--color-white);
+}
+
+/* Grid de contacto (dos columnas) */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-20);
+    align-items: start; /* Alinea al inicio verticalmente */
+}
+
+/* Título de contacto */
+.contact-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--space-6);
+}
+
+/* Descripción */
+.contact-description {
+    color: var(--color-gray-700);
+    line-height: 1.7;
+    margin-bottom: var(--space-10);
+}
+
+/* Lista de información de contacto */
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Cada item (email, teléfono, dirección) */
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-cream);
+    border-radius: var(--radius-md);
+    transition: all var(--duration-fast);
+}
+
+/* Hover en item de contacto */
+.contact-item:hover {
+    background: var(--color-gray-100);
+    transform: translateX(8px); /* Desplazamiento a la derecha */
+}
+
+/* Icono del contacto */
+.contact-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    color: var(--color-accent);
+}
+.contact-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Detalles del contacto */
+.contact-details {
+    display: flex;
+    flex-direction: column;
+}
+.contact-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+}
+.contact-value {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-gray-900);
+}
+
+/* Formulario de contacto */
+.contact-form {
+    background: var(--color-cream);
+    padding: var(--space-10);
+    border-radius: var(--radius-lg);
+}
+
+/* Fila con dos campos */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+}
+
+/* Grupo de campo */
+.form-group {
+    margin-bottom: var(--space-6);
+}
+.form-group label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+    margin-bottom: var(--space-2);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-4);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-900);
+    transition: all var(--duration-fast);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none; /* Quita el contorno por defecto */
+    border-color: var(--color-accent); /* Borde dorado */
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1); /* Sombra exterior dorada tenue */
+}
+.form-group textarea {
+    resize: vertical; /* Permite redimensionar solo verticalmente */
+    min-height: 120px;
+}
+
+/* ========================================
+   Footer (Pie de página)
+   ======================================== */
+.footer {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+/* Call to action dentro del footer */
+.footer-cta {
+    padding: var(--space-24) 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06); /* Línea divisoria sutil */
+}
+.cta-content h3 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--color-white);
+    margin-bottom: var(--space-3);
+}
+.cta-content p {
+    font-size: 1rem;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-8);
+}
+
+/* Parte principal del footer */
+.footer-main {
+    padding: var(--space-20) 0;
+}
+
+/* Grid del footer (marca + enlaces) */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Marca ocupa 1 parte, enlaces 2 partes */
+    gap: var(--space-20);
+}
+
+/* Versión clara del logo dentro del footer */
+.footer-brand .logo--light .logo-name {
+    color: var(--color-accent); /* Dorado */
+}
+.footer-brand .logo--light .logo-tagline {
+    color: var(--color-gray-500);
+}
+
+/* Descripción de la editorial */
+.footer-description {
+    font-size: 0.9375rem;
+    color: var(--color-gray-500);
+    line-height: 1.6;
+    margin-top: var(--space-6);
+}
+
+/* Enlaces a redes sociales */
+.social-links {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+}
+.social-link {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-md);
+    color: var(--color-gray-500);
+    transition: all var(--duration-fast);
+}
+.social-link svg {
+    width: 20px;
+    height: 20px;
+}
+.social-link:hover {
+    background: var(--color-accent); /* Fondo dorado */
+    color: var(--color-black); /* Icono negro */
+}
+
+/* Columnas de enlaces */
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+}
+.footer-column h4 {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+    margin-bottom: var(--space-6);
+}
+.footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+.footer-column a {
+    font-size: 0.9375rem;
+    color: var(--color-gray-400);
+    transition: all var(--duration-fast);
+}
+.footer-column a:hover {
+    color: var(--color-accent);
+    padding-left: 4px; /* Pequeño desplazamiento a la derecha */
+}
+
+/* Barra inferior del footer */
+.footer-bottom {
+    padding: var(--space-8) 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-bottom .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-bottom p {
+    font-size: 0.8125rem;
+    color: var(--color-gray-600);
+}
+.footer-motto {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+.footer-motto .separator {
+    color: var(--color-gray-700);
+}
+
+/* ========================================
+   Reveal Animations (Animaciones al aparecer)
+   ======================================== */
+/* Elementos con atributo data-reveal comienzan ocultos y desplazados */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(30px); /* Desplazamiento hacia abajo */
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+/* Cuando se les añade la clase .revealed (vía JS) se muestran */
+[data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0); /* Posición original */
+}
+
+/* ========================================
+   Responsive Styles (Estilos adaptables)
+   ======================================== */
+/* Pantallas hasta 1200px (laptops más pequeñas) */
+@media (max-width: 1200px) {
+    .hero-content {
+        grid-template-columns: 1fr; /* Una sola columna */
+        text-align: center; /* Texto centrado */
+    }
+    .hero-main {
+        max-width: 100%;
+    }
+    .hero-description {
+        margin: 0 auto var(--space-10); /* Centrado horizontal */
+    }
+    .hero-cta {
+        justify-content: center; /* Botones centrados */
+    }
+    .hero-visual {
+        display: none; /* Oculta las tarjetas animadas */
+    }
+    .hero-stats {
+        justify-content: center; /* Estadísticas centradas */
+    }
+}
+
+/* Pantallas hasta 1024px (tablets y móviles grandes) */
+@media (max-width: 1024px) {
+    .nav-center {
+        display: none; /* Oculta menú central, usa hamburguesa */
+    }
+    .nav-toggle {
+        display: flex; /* Muestra botón hamburguesa */
+    }
+    .nav-menu {
+        position: fixed; /* Menú desplegable a pantalla completa */
+        inset: 0;
+        background: var(--color-cream);
+        flex-direction: column; /* Vertical */
+        justify-content: center;
+        padding: var(--space-8);
+        gap: var(--space-6);
+        opacity: 0; /* Oculto por defecto */
+        visibility: hidden;
+        transition: all var(--duration-base);
+    }
+    .nav-menu.active {
+        opacity: 1; /* Visible cuando se activa */
+        visibility: visible;
+    }
+    .nav-menu .nav-link {
+        font-size: 1.5rem; /* Letras más grandes en menú móvil */
+        font-family: var(--font-display);
+    }
+    .about-grid {
+        grid-template-columns: 1fr; /* Una columna */
+        gap: var(--space-12);
+    }
+    .values-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .authors-grid {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    }
+    .books-grid {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    }
+    .testimonials-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .contact-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .footer-grid {
+        grid-template-columns: 1fr; /* Una columna */
+        gap: var(--space-12);
+    }
+}
+
+/* Pantallas hasta 768px (móviles) */
+@media (max-width: 768px) {
+    section {
+        padding: var(--space-20) 0; /* Menos espaciado vertical */
+    }
+    .hero {
+        min-height: auto; /* Altura automática */
+        padding-bottom: var(--space-16);
+    }
+    .hero-content {
+        padding: var(--space-12) var(--space-6);
+    }
+    .hero-title .word {
+        font-size: 2.5rem; /* Título más pequeño */
+    }
+    .hero-footer {
+        flex-direction: column; /* Columna */
+        gap: var(--space-12);
+        align-items: center;
+    }
+    .hero-stats {
+        flex-direction: column; /* Estadísticas en columna */
+        gap: var(--space-8);
+        text-align: center;
+    }
+    .about-images {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .about-image--1 {
+        height: 300px; /* Altura reducida */
+    }
+    .authors-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .books-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .form-row {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    }
+    .footer-bottom .container {
+        flex-direction: column; /* Columna */
+        gap: var(--space-4);
+        text-align: center;
+    }
+}
+
+/* Pantallas hasta 480px (móviles pequeños) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--space-4); /* Menos relleno lateral */
+    }
+    .hero-cta {
+        flex-direction: column; /* Botones uno debajo del otro */
+    }
+    .hero-cta .btn {
+        width: 100%; /* Botones de ancho completo */
+    }
+    .catalog-filters {
+        justify-content: flex-start; /* Alineación izquierda */
+        overflow-x: auto; /* Scroll horizontal si es necesario */
+        padding-bottom: var(--space-4);
+        -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+    }
+    .filter-btn {
+        flex-shrink: 0; /* Evita que se encojan */
+    }
+    .footer-links {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+}
+
+
+/* Clase para ocultar elementos visualmente pero accesibles para lectores de pantalla */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Prefiere movimiento reducido: desactiva animaciones */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important; /* Duración casi nula */
+        animation-iteration-count: 1 !important; /* Solo una iteración */
+        transition-duration: 0.01ms !important; /* Transiciones instantáneas */
+    }
+    html {
+        scroll-behavior: auto; /* Scroll instantáneo */
+    }
+}
