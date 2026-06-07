@@ -2007,3 +2007,122 @@ section {
         scroll-behavior: auto; /* Scroll instantáneo */
     }
 }
+/* ─── Próximamente card ─── */
+.book-cover--proximamente {
+    background: transparent;
+    border: 2px dashed rgba(255,255,255,0.15);
+}
+.proximamente-front {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03) !important;
+    background-image: none !important;
+}
+.proximamente-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+}
+
+/* ─── Testimony form ─── */
+.testimony-form-wrap {
+    margin-top: 4rem;
+}
+.testimony-form-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 620px;
+    margin: 0 auto;
+}
+.testimony-form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary, #fff);
+}
+.testimony-form-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 1.5rem;
+}
+.testimony-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.testimony-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: var(--text-primary, #fff);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.testimony-input:focus {
+    border-color: rgba(255,255,255,0.4);
+}
+.testimony-textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: var(--text-primary, #fff);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+.testimony-textarea:focus {
+    border-color: rgba(255,255,255,0.4);
+}
+.testimony-error {
+    color: #e07070;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+.testimony-success {
+    color: #70c070;
+    font-size: 0.9rem;
+    margin-top: 0.75rem;
+}
+.testimony-welcome {
+    font-size: 0.9rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 1rem;
+}
+
+/* ─── Testimonial avatar (for dynamically added testimonials) ─── */
+.testimonial-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c9a96e, #8a6f4e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.section-subtitle {
+    text-align: center;
+}
