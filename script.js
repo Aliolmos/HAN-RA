@@ -390,10 +390,7 @@ function loadTestimonials() {
     const grid = document.getElementById('testimonialsGrid');
     if (!grid) return;
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    if (stored.length === 0) {
-        grid.innerHTML = '<p style="text-align:center; color: var(--text-muted, #aaa); padding: 2rem 0;">Todavía no hay testimonios. ¡Sé el primero en compartir tu experiencia!</p>';
-        return;
-    }
+    
     grid.innerHTML = stored.map(t => `
         <article class="testimonial">
             <div class="testimonial-content">
