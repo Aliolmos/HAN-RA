@@ -376,11 +376,13 @@ function initContactForm() {
 
 // Códigos válidos de autores: { código: { nombre, libro } }
 // Podés agregar más acá cuando incorpores nuevos autores.
-const AUTHOR_CODES = {
-    'HANRA-001': { nombre: 'Monelli Silvana A.', libro: 'HAN Una argentina con alma y corazón coreano' },
-    // Agregá más códigos acá:
-    // 'HANRA-002': { nombre: 'Nombre Autor', libro: 'Título del libro' },
-};
+// Valida cualquier código HANRA-001 a HANRA-1000
+function isValidCode(code) {
+    const match = code.match(/^HANRA-(\d{3,4})$/);
+    if (!match) return false;
+    const num = parseInt(match[1]);
+    return num >= 1 && num <= 1000;
+}
 
 const STORAGE_KEY = 'hanra_testimonios';
 
@@ -412,36 +414,38 @@ function loadTestimonials() {
 
 function verifyAuthorCode() {
     const code = document.getElementById('authorCode').value.trim().toUpperCase();
-    const author = AUTHOR_CODES[code];
     const errorEl = document.getElementById('codeError');
 
-    if (author) {
-        verifiedAuthor = author;
+    if (isValidCode(code)) {
+        verifiedAuthor = { codigo: code };
         errorEl.style.display = 'none';
         document.getElementById('testimonyStep1').style.display = 'none';
         document.getElementById('testimonyStep2').style.display = 'block';
-        document.getElementById('authorWelcome').textContent =
-            `¡Bienvenida/o, ${author.nombre}! Escribí tu experiencia con HAN-RA.`;
     } else {
         errorEl.style.display = 'block';
     }
 }
 
 function submitTestimony() {
-    const texto = document.getElementById('testimonyText').value.trim();
+    const nombre = document.getElementById('authorName').value.trim();
+    const libro  = document.getElementById('authorBook').value.trim();
+    const texto  = document.getElementById('testimonyText').value.trim();
     const successEl = document.getElementById('testimonySuccess');
-    if (!texto || !verifiedAuthor) return;
+
+    if (!texto || !nombre || !libro || !verifiedAuthor) return;
 
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     stored.unshift({
-        nombre: verifiedAuthor.nombre,
-        libro:  verifiedAuthor.libro,
+        nombre,
+        libro,
         texto,
-        fecha:  new Date().toLocaleDateString('es-AR'),
+        fecha: new Date().toLocaleDateString('es-AR'),
     });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
 
     document.getElementById('testimonyText').value = '';
+    document.getElementById('authorName').value = '';
+    document.getElementById('authorBook').value = '';
     successEl.style.display = 'block';
     loadTestimonials();
 
@@ -578,12 +582,7 @@ function submitTestimony() {
             ashParticles.push({
                 x:       x + randomBetween(-size * 0.8, size * 0.8),
                 y:       y + randomBetween(-size * 0.5, size * 0.3),
-                r:       randomBetween(1.4, 2.0),        // más grandes, visibles
-                vx:      randomBetween(-0.9, 0.9),
-                vy:      randomBetween(-1.2, 0.1),       // suben bastante
-                gravity: randomBetween(0.003, 0.008),    // caen muy despacio
-                opacity: randomBetween(0.7, 1.0),        // bien opacas
-                fade:    randomBetween(0.003, 0.007),    // duran mucho más
+                
             });
         }
     }
