@@ -384,32 +384,41 @@ function isValidCode(code) {
     return num >= 1 && num <= 1000;
 }
 
-const STORAGE_KEY = 'hanra_testimonios';
-
 let verifiedAuthor = null;
 
-function loadTestimonials() {
+async function loadTestimonials() {
     const grid = document.getElementById('testimonialsGrid');
     if (!grid) return;
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    
-    grid.innerHTML = stored.map(t => `
-        <article class="testimonial">
-            <div class="testimonial-content">
-                <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                </svg>
-                <blockquote>${t.texto}</blockquote>
-            </div>
-            <footer class="testimonial-author">
-                <div class="testimonial-avatar">${t.nombre.charAt(0)}</div>
-                <div class="testimonial-info">
-                    <cite>${t.nombre}</cite>
-                    <span>Autora/Autor de "${t.libro}"</span>
+
+    grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">Cargando testimonios...</p>';
+
+    try {
+        const testimonios = await window.cargarTestimonios();
+        if (!testimonios || testimonios.length === 0) {
+            grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">Todavía no hay testimonios.</p>';
+            return;
+        }
+        grid.innerHTML = testimonios.map(t => `
+            <article class="testimonial">
+                <div class="testimonial-content">
+                    <svg class="testimonial-quote" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                    <blockquote>${t.texto}</blockquote>
                 </div>
-            </footer>
-        </article>
-    `).join('');
+                <footer class="testimonial-author">
+                    <div class="testimonial-avatar">${t.nombre.charAt(0)}</div>
+                    <div class="testimonial-info">
+                        <cite>${t.nombre}</cite>
+                        <span>Autora/Autor de "${t.libro}"</span>
+                    </div>
+                </footer>
+            </article>
+        `).join('');
+    } catch(e) {
+        console.error(e);
+        grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">Error al cargar testimonios.</p>';
+    }
 }
 
 function verifyAuthorCode() {
@@ -426,36 +435,41 @@ function verifyAuthorCode() {
     }
 }
 
-function submitTestimony() {
-    const nombre = document.getElementById('authorName').value.trim();
-    const libro  = document.getElementById('authorBook').value.trim();
-    const texto  = document.getElementById('testimonyText').value.trim();
+async function submitTestimony() {
+    const nombre    = document.getElementById('authorName').value.trim();
+    const libro     = document.getElementById('authorBook').value.trim();
+    const texto     = document.getElementById('testimonyText').value.trim();
     const successEl = document.getElementById('testimonySuccess');
+    const btn       = document.querySelector('#testimonyStep2 .btn-primary');
 
-    if (!texto || !nombre || !libro || !verifiedAuthor) return;
+    if (!nombre || !libro || !texto || !verifiedAuthor) return;
 
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    stored.unshift({
-        nombre,
-        libro,
-        texto,
-        fecha: new Date().toLocaleDateString('es-AR'),
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+    btn.disabled = true;
+    btn.querySelector('.btn-text').textContent = 'Publicando...';
 
-    document.getElementById('testimonyText').value = '';
-    document.getElementById('authorName').value = '';
-    document.getElementById('authorBook').value = '';
-    successEl.style.display = 'block';
-    loadTestimonials();
+    try {
+        await window.guardarTestimonio({ nombre, libro, texto });
 
-    setTimeout(() => {
-        successEl.style.display = 'none';
-        document.getElementById('testimonyStep2').style.display = 'none';
-        document.getElementById('testimonyStep1').style.display = 'block';
-        document.getElementById('authorCode').value = '';
-        verifiedAuthor = null;
-    }, 3000);
+        document.getElementById('authorName').value    = '';
+        document.getElementById('authorBook').value    = '';
+        document.getElementById('testimonyText').value = '';
+        successEl.style.display = 'block';
+        loadTestimonials();
+
+        setTimeout(() => {
+            successEl.style.display = 'none';
+            document.getElementById('testimonyStep2').style.display = 'none';
+            document.getElementById('testimonyStep1').style.display = 'block';
+            document.getElementById('authorCode').value = '';
+            verifiedAuthor = null;
+            btn.disabled = false;
+            btn.querySelector('.btn-text').textContent = 'Publicar testimonio';
+        }, 3000);
+    } catch(e) {
+        console.error(e);
+        btn.querySelector('.btn-text').textContent = 'Error, intentá de nuevo';
+        btn.disabled = false;
+    }
 }
 
 
