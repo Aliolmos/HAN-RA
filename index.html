@@ -375,11 +375,13 @@
                                 <span class="btn-text">Verificar</span>
                             </button>
                         </div>
-                        <p id="codeError" class="testimony-error" style="display:none;">Código inválido. Solo autores registrados pueden comentar.</p>
+                        <p id="codeError" class="testimony-error" style="display:none;">Código inválido.</p>
                     </div>
 
                     <div id="testimonyStep2" style="display:none;">
-                        <p id="authorWelcome" class="testimony-welcome"></p>
+                        <p class="testimony-welcome">¡Código verificado! Completá tus datos.</p>
+                        <input type="text" id="authorName" class="testimony-input" placeholder="Tu nombre completo" style="margin-bottom:0.75rem;width:100%;display:block;" />
+                        <input type="text" id="authorBook" class="testimony-input" placeholder="Título de tu libro" style="margin-bottom:0.75rem;width:100%;display:block;" />
                         <textarea id="testimonyText" class="testimony-textarea" placeholder="Escribí tu testimonio aquí..." rows="4"></textarea>
                         <button class="btn btn-primary" onclick="submitTestimony()">
                             <span class="btn-text">Publicar testimonio</span>
