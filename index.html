@@ -315,7 +315,15 @@
             </div>
             
             <div class="books-grid">
-                <article class="book-card" data-category="poesia" data-reveal>
+                <article class="book-card" data-category="poesia" data-reveal
+                    data-book-title="HAN — Una argentina con alma y corazón coreano"
+                    data-book-author="Monelli Silvana A."
+                    data-book-desc="Un libro sobre poesía en español y coreana con un secreto por descubrir. Primer libro de la autora, parte de una saga bilingüe español-coreano que tiende puentes entre dos culturas."
+                    data-book-price="$40.000"
+                    data-book-cover="IMAGENES LIBROS/tapa 1er libro.png"
+                    data-book-pages="98 pag"
+                    data-book-year="2026"
+                    data-book-link="https://mpago.la/1F7Qof3">
                     <div class="book-cover book-cover--warm">
                         <div class="book-spine"></div>
                         <div class="book-front" style="background-image: url('IMAGENES LIBROS/tapa 1er libro.png'); background-size: cover; ">
@@ -324,7 +332,7 @@
                             <p>Un libro sobre poesía en español y coreana con un secreto por descrubir.</p>
                             <div class="book-meta">
                                 <span>98 pag</span>
-                                <span>2026</span>s
+                                <span>2026</span>
                             </div>
                         </div>
                     </div>
@@ -590,5 +598,30 @@
     <canvas id="petalsCanvas"></canvas>
 
     <script src="script.js"></script>
+    <!-- Book Purchase Modal -->
+    <div class="book-modal" id="bookModal" aria-hidden="true">
+        <div class="book-modal-overlay" id="bookModalOverlay"></div>
+        <div class="book-modal-content">
+            <button class="book-modal-close" id="bookModalClose" aria-label="Cerrar">&times;</button>
+            <div class="book-modal-cover">
+                <img id="bookModalImg" src="" alt="">
+            </div>
+            <div class="book-modal-info">
+                <span class="book-modal-category" id="bookModalCategory"></span>
+                <h3 class="book-modal-title" id="bookModalTitle"></h3>
+                <span class="book-modal-author" id="bookModalAuthor"></span>
+                <p class="book-modal-desc" id="bookModalDesc"></p>
+                <div class="book-modal-meta">
+                    <span id="bookModalPages"></span>
+                    <span id="bookModalYear"></span>
+                </div>
+                <span class="book-modal-price" id="bookModalPrice"></span>
+                <a href="#" id="bookModalBuyBtn" class="btn-buy-mp" target="_blank" rel="noopener">
+                    Comprar
+                </a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
