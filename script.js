@@ -186,19 +186,32 @@ function verMas(){
  */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+        // Ignorar el botón Comprar del modal
+        if (anchor.id === 'bookModalBuyBtn') return;
+
         anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+
+            // Ignorar enlaces vacíos
+            if (href === '#') return;
+
+            const target = document.querySelector(href);
+
+            if (!target) return;
+
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            
-            if (target) {
-                const headerHeight = 80;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
+
+            const headerHeight = 80;
+            const targetPosition =
+                target.getBoundingClientRect().top +
+                window.pageYOffset -
+                headerHeight;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
         });
     });
 }
