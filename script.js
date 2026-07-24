@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRevealAnimations();
     initCounterAnimation();
     initBookFilters();
+    initBookModal();
     initContactForm();
     loadTestimonials();
    
@@ -262,6 +263,72 @@ function animateNumber(element, target) {
     }
     
     requestAnimationFrame(update);
+}
+
+/**
+ * Book Purchase Modal (Mercado Pago)
+ */
+function initBookModal() {
+    const modal      = document.getElementById('bookModal');
+    const overlay    = document.getElementById('bookModalOverlay');
+    const closeBtn   = document.getElementById('bookModalClose');
+    const cards      = document.querySelectorAll('.book-card');
+
+    if (!modal || !cards.length) return;
+
+    const els = {
+        img:      document.getElementById('bookModalImg'),
+        category: document.getElementById('bookModalCategory'),
+        title:    document.getElementById('bookModalTitle'),
+        author:   document.getElementById('bookModalAuthor'),
+        desc:     document.getElementById('bookModalDesc'),
+        pages:    document.getElementById('bookModalPages'),
+        year:     document.getElementById('bookModalYear'),
+        price:    document.getElementById('bookModalPrice'),
+        buyBtn:   document.getElementById('bookModalBuyBtn')
+    };
+
+    function openModal(card) {
+        const data = card.dataset;
+
+        els.img.src        = data.bookCover || '';
+        els.img.alt         = data.bookTitle || '';
+        els.category.textContent = card.dataset.category || '';
+        els.title.textContent    = data.bookTitle || '';
+        els.author.textContent   = data.bookAuthor || '';
+        els.desc.textContent     = data.bookDesc || '';
+        els.pages.textContent    = data.bookPages || '';
+        els.year.textContent     = data.bookYear || '';
+        els.price.textContent    = data.bookPrice || '';
+        els.buyBtn.href          = data.bookLink || '#';
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Evita que un click en el filtro dispare el modal
+            if (e.target.closest('.filter-btn')) return;
+            openModal(card);
+        });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
 }
 
 /**
