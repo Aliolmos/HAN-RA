@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initCounterAnimation();
     initBookFilters();
     initBookModal();
+    initShippingForm();   // ← agregado
     initContactForm();
     loadTestimonials();
-   
 });
 
 /**
@@ -286,6 +286,8 @@ function initBookModal() {
     const overlay    = document.getElementById('bookModalOverlay');
     const closeBtn   = document.getElementById('bookModalClose');
     const cards      = document.querySelectorAll('.book-card');
+    const paidBtn    = document.getElementById('bookModalPaidBtn');
+    const shipWrap   = document.getElementById('shippingFormWrap');
 
     if (!modal || !cards.length) return;
 
@@ -301,6 +303,9 @@ function initBookModal() {
         buyBtn:   document.getElementById('bookModalBuyBtn')
     };
 
+    // Datos del libro actualmente abierto en el modal (usados al enviar el envío)
+    window.currentBookData = null;
+
     function openModal(card) {
         const data = card.dataset;
 
@@ -315,6 +320,17 @@ function initBookModal() {
         els.price.textContent    = data.bookPrice || '';
         els.buyBtn.href          = data.bookLink || '#';
 
+        window.currentBookData = {
+            titulo:  data.bookTitle  || '',
+            autor:   data.bookAuthor || '',
+            precio:  data.bookPrice  || '',
+            cantidad: 1,
+            link:    data.bookLink   || ''
+        };
+
+        // Reset del formulario de envío cada vez que se abre un libro nuevo
+        resetShippingForm();
+
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -328,7 +344,6 @@ function initBookModal() {
 
     cards.forEach(card => {
         card.addEventListener('click', (e) => {
-            // Evita que un click en el filtro dispare el modal
             if (e.target.closest('.filter-btn')) return;
             openModal(card);
         });
@@ -342,6 +357,40 @@ function initBookModal() {
             closeModal();
         }
     });
+
+    // Mostrar el formulario de envío al presionar "Ya realicé el pago"
+    if (paidBtn && shipWrap) {
+        paidBtn.addEventListener('click', () => {
+            shipWrap.classList.add('open');
+            paidBtn.style.display = 'none';
+            setTimeout(() => {
+                shipWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 200);
+        });
+    }
+
+    // Expuesto para poder resetear desde submitShippingForm()
+    window.closeBookModal = closeModal;
+}
+
+function resetShippingForm() {
+    const shipWrap  = document.getElementById('shippingFormWrap');
+    const paidBtn   = document.getElementById('bookModalPaidBtn');
+    const form      = document.getElementById('shippingForm');
+    const errorEl   = document.getElementById('shippingError');
+    const successEl = document.getElementById('shippingSuccess');
+
+    if (shipWrap) shipWrap.classList.remove('open');
+    if (paidBtn) paidBtn.style.display = 'block';
+    if (form) {
+        form.reset();
+        form.style.display = 'block';
+    }
+    if (errorEl) errorEl.style.display = 'none';
+    if (successEl) successEl.style.display = 'none';
+
+    document.querySelectorAll('.shipping-group input, .shipping-group textarea')
+        .forEach(el => el.classList.remove('invalid'));
 }
 
 /**
@@ -761,3 +810,132 @@ async function submitTestimony() {
 
     animate();
 })();
+/* ─────────────────────────────────────────
+   ENVÍO DE DATOS DE ENVÍO (post-pago) — EmailJS
+   ───────────────────────────────────────── */
+function initShippingForm() {
+    const form = document.getElementById('shippingForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fields = {
+            shipName:     document.getElementById('shipName'),
+            shipEmail:    document.getElementById('shipEmail'),
+            shipPhone:    document.getElementById('shipPhone'),
+            shipProvince: document.getElementById('shipProvince'),
+            shipCity:     document.getElementById('shipCity'),
+            shipZip:      document.getElementById('shipZip'),
+            shipAddress:  document.getElementById('shipAddress'),
+        };
+        const shipApt   = document.getElementById('shipApt');
+        const shipNotes = document.getElementById('shipNotes');
+        const shipConfirm = document.getElementById('shipConfirm');
+        const errorEl   = document.getElementById('shippingError');
+        const successEl = document.getElementById('shippingSuccess');
+        const submitBtn = document.getElementById('shippingSubmitBtn');
+        const btnText   = submitBtn.querySelector('.btn-text');
+
+        // Reset visual de errores
+        errorEl.style.display = 'none';
+        Object.values(fields).forEach(el => el.classList.remove('invalid'));
+
+        // Validación
+        let firstInvalid = null;
+        Object.values(fields).forEach(el => {
+            if (!el.value.trim()) {
+                el.classList.add('invalid');
+                if (!firstInvalid) firstInvalid = el;
+            }
+        });
+
+        if (fields.shipEmail.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.shipEmail.value.trim())) {
+            fields.shipEmail.classList.add('invalid');
+            if (!firstInvalid) firstInvalid = fields.shipEmail;
+        }
+
+        if (!shipConfirm.checked) {
+            if (!firstInvalid) firstInvalid = shipConfirm;
+        }
+
+        if (firstInvalid) {
+            errorEl.textContent = 'Por favor completá todos los campos obligatorios y confirmá tus datos.';
+            errorEl.style.display = 'block';
+            firstInvalid.focus();
+            return;
+        }
+
+        if (!window.currentBookData) {
+            errorEl.textContent = 'No se encontró información del libro. Cerrá el modal y volvé a intentarlo.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        btnText.textContent = 'Enviando...';
+
+        const book = window.currentBookData;
+
+        const mensaje =
+`NUEVO PEDIDO
+
+==============================
+LIBRO
+
+Título: ${book.titulo}
+Autor: ${book.autor}
+Precio: ${book.precio}
+Cantidad: ${book.cantidad}
+${book.link ? 'Link del libro: ' + book.link : ''}
+
+==============================
+CLIENTE
+
+Nombre: ${fields.shipName.value.trim()}
+Correo: ${fields.shipEmail.value.trim()}
+Teléfono: ${fields.shipPhone.value.trim()}
+Provincia: ${fields.shipProvince.value.trim()}
+Ciudad: ${fields.shipCity.value.trim()}
+Código Postal: ${fields.shipZip.value.trim()}
+Dirección: ${fields.shipAddress.value.trim()}
+Departamento: ${shipApt.value.trim() || '-'}
+Observaciones: ${shipNotes.value.trim() || '-'}
+
+==============================
+Estado informado por el cliente:
+✔ El comprador indicó que ya realizó el pago en Mercado Pago.
+
+IMPORTANTE:
+Verificar manualmente el pago en Mercado Pago antes de realizar el envío.`;
+
+        try {
+            if (typeof emailjs === 'undefined' || EMAILJS_SERVICE_ID === 'TU_SERVICE_ID') {
+                throw new Error('EmailJS no está configurado todavía.');
+            }
+
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                from_name:  fields.shipName.value.trim(),
+                from_email: fields.shipEmail.value.trim(),
+                subject:    `Nuevo pedido - ${book.titulo}`,
+                message:    mensaje,
+                to_email:   'editorialhanra@gmail.com',
+            });
+
+            form.style.display = 'none';
+            successEl.style.display = 'block';
+
+            setTimeout(() => {
+                if (window.closeBookModal) window.closeBookModal();
+                resetShippingForm();
+            }, 4000);
+
+        } catch (err) {
+            console.error('Error al enviar datos de envío:', err);
+            errorEl.textContent = 'Ocurrió un error al enviar tus datos. Por favor, intentá de nuevo.';
+            errorEl.style.display = 'block';
+            submitBtn.disabled = false;
+            btnText.textContent = 'Enviar datos de envío';
+        }
+    });
+}
