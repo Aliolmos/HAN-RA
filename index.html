@@ -318,7 +318,7 @@
                 <article class="book-card" data-category="poesia" data-reveal
                     data-book-title="HAN — Una argentina con alma y corazón coreano"
                     data-book-author="Monelli Silvana A."
-                    data-book-desc="Un libro sobre poesía en español y coreano con un secreto por descubrir. Primer libro de la autora, parte de una saga bilingüe español-coreano que tiende puentes entre dos culturas."
+                    data-book-desc="Una experiencia sensorial donde el amor de pareja cobra vida a través de la poesía. Cada página invita a ver, tocar, escuchar y sentir una historia que florece en cada verso."
                     data-book-price="$40.000"
                     data-book-cover="IMAGENES LIBROS/tapa 1er libro.png"
                     data-book-pages="98 pag"
@@ -352,7 +352,7 @@
                 <article class="book-card" data-category="poesia" data-reveal
                     data-book-title="JEONG — Una argentina con alma y corazón coreano"
                     data-book-author="Monelli Silvana A."
-                    data-book-desc="Un libro sobre poesía en español y coreano con un secreto por descubrir. Primer libro de la autora, parte de una saga bilingüe español-coreano que tiende puentes entre dos culturas."
+                    data-book-desc="Una experiencia sensorial que celebra la familia y la amistad. Poemas para leer, escuchar, tocar y sentir los vínculos que nos acompañan toda la vida."
                     data-book-price="$40.000"
                     data-book-cover="IMAGENES LIBROS/tapa 1er libro.png"
                     data-book-pages="84 pag"
@@ -385,7 +385,7 @@
                 <article class="book-card" data-category="poesia" data-reveal
                     data-book-title="SAIR — Una argentina con alma y corazón coreano"
                     data-book-author="Monelli Silvana A."
-                    data-book-desc="Un libro sobre poesía en español y coreano con un secreto por descubrir. Primer libro de la autora, parte de una saga bilingüe español-coreano que tiende puentes entre dos culturas."
+                    data-book-desc="Una experiencia sensorial que acompaña la adolescencia con versos sobre el crecimiento, los sueños y las emociones. Una obra para descubrir con todos los sentidos."
                     data-book-price="$40.000"
                     data-book-cover="IMAGENES LIBROS/tapa 1er libro.png"
                     data-book-pages="98 pag"
@@ -418,7 +418,7 @@
                 <article class="book-card" data-category="poesia" data-reveal
                     data-book-title="MI PRIMER PASO AL COREANO"
                     data-book-author="Monelli Silvana A."
-                    data-book-desc="Un libro sobre poesía en español y coreano con un secreto por descubrir. Primer libro de la autora, parte de una saga bilingüe español-coreano que tiende puentes entre dos culturas."
+                    data-book-desc="Una experiencia sensorial para aprender coreano de forma didáctica, cromática e interactiva. Un recorrido donde la vista, el oído y el tacto transforman el aprendizaje en una vivencia."
                     data-book-price="$40.000"
                     data-book-cover="IMAGENES LIBROS/tapa 1er libro.png"
                     data-book-pages="98 pag"
@@ -439,7 +439,7 @@
                         </div>
                     </div>
                     <div class="book-details" style="flex-direction: column;">
-                        <span class="book-category">poesía</span>
+                        <span class="book-category">educación</span>
                         <h4 class="book-title" style="text-align: center;">MI PRIMER PASO AL COREANO <br>
                             Aprende facil, habla desde hoy</h4>
                         <span class="book-author">Monelli Silvana A.</span>
@@ -700,6 +700,27 @@
     <canvas id="petalsCanvas"></canvas>
 
     <script src="script.js"></script>
+    <!-- Fix: permitir scroll dentro del modal de compra -->
+    <style>
+        #bookModal.active {
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        #bookModal .book-modal-content {
+            max-height: 90vh !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            overscroll-behavior: contain;
+        }
+        #bookModal .shipping-form-wrap {
+            max-height: none !important;
+            overflow: visible !important;
+        }
+        #bookModal .book-modal-info {
+            overflow: visible !important;
+        }
+    </style>
+
     <!-- Book Purchase Modal -->
     <div class="book-modal" id="bookModal" aria-hidden="true">
         <div class="book-modal-overlay" id="bookModalOverlay"></div>
@@ -719,7 +740,12 @@
                 </div>
                 <span class="book-modal-price" id="bookModalPrice"></span>
 
-                <a href="#" id="bookModalBuyBtn" class="btn-buy-mp" target="_blank" rel="noopener">
+                <p class="book-modal-note" style="font-size: 0.85rem; color: var(--text-muted, #aaa); text-align: center; margin: 0.75rem 0;">
+                    Después de pagar, Mercado Pago <strong>no te va a traer de vuelta solo</strong>.
+                    Cerrá esa pestaña o volvé para atrás y tocá "Ya realicé el pago" acá abajo.
+                </p>
+
+                <a href="#" id="bookModalBuyBtn" class="btn-buy-mp" rel="noopener">
                     Ir a Mercado Pago
                 </a>
 
