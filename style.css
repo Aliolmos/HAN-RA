@@ -2168,12 +2168,12 @@ section {
 
 .book-modal-content {
     position: relative;
-    display: flex;
-    gap: var(--space-8);
-    max-width: 780px;
+    max-width: 560px;
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     background: var(--color-charcoal);
     border: 1px solid rgba(201, 162, 39, 0.25);
     border-radius: 12px;
@@ -2187,19 +2187,21 @@ section {
 }
 
 .book-modal-close {
-    position: absolute;
-    top: var(--space-4);
-    right: var(--space-4);
+    position: sticky;
+    top: 0;
+    float: right;
+    margin-left: var(--space-4);
     width: 36px;
     height: 36px;
     border: 1px solid rgba(201, 162, 39, 0.3);
     border-radius: 50%;
-    background: transparent;
+    background: var(--color-charcoal);
     color: var(--color-gray-100);
     font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
     transition: all var(--transition-base, 0.3s ease);
+    z-index: 2;
 }
 
 .book-modal-close:hover {
@@ -2209,7 +2211,8 @@ section {
 }
 
 .book-modal-cover {
-    flex: 0 0 220px;
+    max-width: 220px;
+    margin: 0 auto var(--space-6);
 }
 
 .book-modal-cover img {
@@ -2223,6 +2226,7 @@ section {
     flex-direction: column;
     gap: var(--space-3);
     color: var(--color-gray-100);
+    text-align: center;
 }
 
 .book-modal-category {
@@ -2249,6 +2253,7 @@ section {
     line-height: 1.6;
     color: var(--color-gray-300);
     margin-top: var(--space-2);
+    text-align: left;
 }
 
 .book-modal-meta {
@@ -2295,14 +2300,11 @@ section {
 
 @media (max-width: 640px) {
     .book-modal-content {
-        flex-direction: column;
         padding: var(--space-6);
         max-height: 85vh;
     }
     .book-modal-cover {
-        flex: none;
-        max-width: 160px;
-        margin: 0 auto;
+        max-width: 140px;
     }
 }
 /* ─── Botón "Ya realicé el pago" ─── */
@@ -2349,6 +2351,11 @@ section {
     font-size: 1.1rem;
     color: var(--color-white);
     margin-bottom: var(--space-4);
+    text-align: left;
+}
+
+.shipping-form-wrap {
+    text-align: left;
 }
 
 .shipping-row {
