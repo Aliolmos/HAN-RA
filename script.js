@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initShippingForm();   // ← agregado
     initContactForm();
     loadTestimonials();
+    handlePaymentReturn(); // ← detecta si el usuario vuelve de Mercado Pago
 });
 
 /**
@@ -328,18 +329,26 @@ function initBookModal() {
             link:    data.bookLink   || ''
         };
 
+        // Guardamos qué libro quedó abierto, por si el usuario vuelve
+        // de Mercado Pago y hay que reabrir este mismo modal.
+        try {
+            localStorage.setItem('hanra_last_book', JSON.stringify(window.currentBookData));
+        } catch (e) {}
+
         // Reset del formulario de envío cada vez que se abre un libro nuevo
         resetShippingForm();
 
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
     }
 
     function closeModal() {
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
     }
 
     cards.forEach(card => {
@@ -371,6 +380,50 @@ function initBookModal() {
 
     // Expuesto para poder resetear desde submitShippingForm()
     window.closeBookModal = closeModal;
+
+    // Expuesto para poder reabrir el modal desde handlePaymentReturn()
+    window.openBookModalByTitle = function(titulo) {
+        const match = Array.from(cards).find(c => c.dataset.bookTitle === titulo);
+        if (match) openModal(match);
+    };
+}
+
+/**
+ * Detecta si el usuario vuelve de Mercado Pago y reabre el modal
+ * del libro que estaba comprando, mostrando directamente el
+ * formulario de "Ya realicé el pago".
+ *
+ * IMPORTANTE: para que esto funcione, en Mercado Pago tenés que
+ * configurar la "URL de retorno" de tu link de pago apuntando a:
+ *   https://tusitio.com/?pago=ok
+ * (reemplazá tusitio.com por tu dominio real)
+ */
+function handlePaymentReturn() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('pago') !== 'ok') return;
+
+    let lastBook = null;
+    try {
+        lastBook = JSON.parse(localStorage.getItem('hanra_last_book') || 'null');
+    } catch (e) {}
+
+    // Limpiar el parámetro de la URL para que no quede pegado
+    const cleanUrl = window.location.origin + window.location.pathname + '#catalogo';
+    window.history.replaceState({}, document.title, cleanUrl);
+
+    setTimeout(() => {
+        const catalogo = document.getElementById('catalogo');
+        if (catalogo) catalogo.scrollIntoView({ behavior: 'smooth' });
+
+        if (lastBook && lastBook.titulo && window.openBookModalByTitle) {
+            setTimeout(() => {
+                window.openBookModalByTitle(lastBook.titulo);
+                // Simulamos automáticamente el click en "Ya realicé el pago"
+                const paidBtn = document.getElementById('bookModalPaidBtn');
+                if (paidBtn) paidBtn.click();
+            }, 600);
+        }
+    }, 800);
 }
 
 function resetShippingForm() {
@@ -439,10 +492,17 @@ function initBookFilters() {
  * Configurá tus IDs de EmailJS abajo.
  * Creá cuenta gratis en https://www.emailjs.com
  * Service ID, Template ID y Public Key se obtienen en el dashboard.
+ *
+ * ⚠️ MUY IMPORTANTE: mientras estos 3 valores sigan como
+ * 'TU_SERVICE_ID' / 'TU_TEMPLATE_ID' / 'TU_PUBLIC_KEY', tanto el
+ * formulario de contacto como el de "Ya realicé el pago" van a
+ * mostrar el mensaje de error, porque EmailJS todavía no está
+ * conectado a tu cuenta real. Reemplazá los 3 valores por los que
+ * te da el dashboard de EmailJS y el error se soluciona.
  */
-const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID';   // ← reemplazá
-const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID';  // ← reemplazá
-const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY';   // ← reemplazá
+const EMAILJS_SERVICE_ID  = 'service_zy3l1lr';   // ← reemplazá
+const EMAILJS_TEMPLATE_ID = 'template_blelzyl';  // ← reemplazá
+const EMAILJS_PUBLIC_KEY  = 'EdxiKAq93y9cFBSOl';   // ← reemplazá
 
 function initContactForm() {
     if (typeof emailjs !== 'undefined') {
@@ -467,13 +527,10 @@ function initContactForm() {
         // Si EmailJS está configurado, usarlo
         if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID !== 'TU_SERVICE_ID') {
             try {
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                    from_name:    data.name,
-                    from_email:   data.email,
-                    subject:      data.subject,
-                    message:      data.message,
-                    to_email:     'editorialhanra@gmail.com',
-                });
+              await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    message: mensaje,
+    to_email: 'editorialhanra@gmail.com'
+});
                 btnText.textContent = '¡Mensaje enviado!';
                 form.reset();
                 setTimeout(() => {
@@ -928,6 +985,7 @@ Verificar manualmente el pago en Mercado Pago antes de realizar el envío.`;
             setTimeout(() => {
                 if (window.closeBookModal) window.closeBookModal();
                 resetShippingForm();
+                try { localStorage.removeItem('hanra_last_book'); } catch (e) {}
             }, 4000);
 
         } catch (err) {
