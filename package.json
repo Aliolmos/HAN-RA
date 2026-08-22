@@ -1,0 +1,16 @@
+{
+  "name": "hanra-functions",
+  "description": "Cloud Functions para el carrito de HAN-RA Editorial (envío Andreani + pago Mercado Pago)",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "scripts": {
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-functions": "^5.0.0",
+    "axios": "^1.7.0",
+    "cors": "^2.8.5"
+  }
+}
