@@ -315,6 +315,17 @@ function initBookModal() {
             buyBtn.href = data.bookMlLink || '#';
         }
 
+        // Libros en preventa: solo botón de WhatsApp para reservar
+        const buyWrap = document.getElementById('bookModalBuyWrap');
+        const waBtn   = document.getElementById('bookModalWaBtn');
+        const preventa = data.bookPreventa === 'true';
+        if (buyWrap) buyWrap.style.display = preventa ? 'none' : 'flex';
+        if (waBtn) {
+            waBtn.style.display = preventa ? 'inline-flex' : 'none';
+            const msg = `Hola! Quiero reservar el libro "${data.bookTitle}" en preventa.`;
+            waBtn.href = 'https://wa.me/5493543556311?text=' + encodeURIComponent(msg);
+        }
+
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
