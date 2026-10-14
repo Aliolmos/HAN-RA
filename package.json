@@ -2,7 +2,7 @@
   "name": "hanra-functions",
   "description": "Cloud Functions para el carrito de HAN-RA Editorial (envío Andreani + pago Mercado Pago)",
   "engines": {
-    "node": "20"
+    "node": "24.x"
   },
   "main": "index.js",
   "scripts": {
