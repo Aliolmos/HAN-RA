@@ -343,7 +343,30 @@
                     </div>
                 </article>
 
-                <article class="author-big" data-reveal>
+                <article class="author-card" data-reveal>
+                    <div class="author-image">
+                        <img src="imagenes autores/AUTORA ALINA.jpeg" alt="Alina T. Olmos" loading="lazy" style="object-fit: cover; object-position: center 10%;">
+                        <div class="author-overlay">
+                            <span class="author-books">1 LIBRO</span>
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <span class="author-location">Argentina, Córdoba</span>
+                        <h3 class="author-name">Alina T. Olmos</h3>
+                        <p class="author-bio">Escritora argentina.
+                            “ABUELOS EN LÍNEA: Una guía práctica para entrar al mundo digital”. <br>
+                            Es su primer libro, pensado para acompañar a los adultos mayores
+                            <button id="verMasOlmos" class="btn btn-outline" onclick="document.getElementById('olmos').classList.replace('oculto', 'visto'); this.remove();" style="margin: 20px;">ver mas</button>
+                            <span id="olmos" class="oculto">
+                                en sus primeros pasos con la tecnología: el celular, la computadora,
+                                WhatsApp, el correo y los videos, explicados paso a paso y con un
+                                lenguaje simple y amigable, para que nadie quede afuera del mundo digital.
+                            </span>
+                        </p>
+                    </div>
+                </article>
+
+                <article class="author-big" data-reveal style="grid-column: span 2;">
                     <h1> PRÓXIMAMENTE...</h1>
                 </article>
                 
